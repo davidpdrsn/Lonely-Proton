@@ -1,0 +1,6 @@
+%div.posts
+  - if @posts.present?
+    - @posts.each do |post|
+      = render partial: 'shared/post', locals: { post: post }
+  - else
+    There are no posts yet

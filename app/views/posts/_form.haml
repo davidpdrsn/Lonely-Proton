@@ -1,0 +1,24 @@
+= form_for post do |f|
+  %div.field
+    = f.label :title
+    = f.text_field :title
+
+  %div.field
+    = f.label :markdown
+    = f.text_area :markdown
+
+  %div.article__preview__markdown-parse-method
+    %div
+      %input{ type: 'radio', name: 'markdown-parse-method', value: 'native', id: 'native-parse' }
+      %label{ for: 'native-parse' } Parse using JavaScript
+
+    %div
+      %input{ type: 'radio', name: 'markdown-parse-method', value: 'api', id: 'parse-api' }
+      %label{ for: 'parse-api' } Parse using API (slower, but more accurate)
+
+  %div.article__preview
+
+  - if post.new_record?
+    = f.submit "Create post"
+  - else
+    = f.submit "Save post"

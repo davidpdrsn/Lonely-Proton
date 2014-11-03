@@ -1,0 +1,9 @@
+= link_to "Create new post", new_post_path
+
+%div.posts
+  - if @posts.present?
+    - @posts.each do |post|
+      = post.title
+      = link_to "Edit", edit_post_path(post)
+  - else
+    There are no posts yet
