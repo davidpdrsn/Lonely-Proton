@@ -1,0 +1,10 @@
+%div.article__preview__markdown-parse-method
+  %div
+    %input{ type: 'radio', name: 'markdown-parse-method', value: 'native', id: 'native-parse' }
+    %label{ for: 'native-parse' } Parse using JavaScript
+
+  %div
+    %input{ type: 'radio', name: 'markdown-parse-method', value: 'api', id: 'parse-api' }
+    %label{ for: 'parse-api' } Parse using API (slower, but more accurate)
+
+%div.article__preview
