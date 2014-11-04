@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   scope "/api" do
     post "/parse_markdown", to: "api/markdown_parser#parse"
+    resources :tags, only: [:create]
   end
 
   get "/admin", to: "admin#index", as: :admin

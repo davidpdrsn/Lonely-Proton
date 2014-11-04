@@ -1,4 +1,4 @@
-= form_for post do |f|
+= form_for @form.post do |f|
   %div.field
     = f.label :title
     = f.text_field :title
@@ -9,7 +9,26 @@
 
   = render 'preview_markdown'
 
-  - if post.new_record?
-    = f.submit "Create post"
-  - else
-    = f.submit "Save post"
+  %div.field
+    %p
+      Tags:
+
+    %div.tags
+      - @form.tags.each do |tag|
+        %div.tag
+          = check_box_tag "post[tag_ids][]",
+            tag.id,
+            @form.post.tags.any? {|post_tag| tag == post_tag},
+            id: tag.dom_id
+          = label_tag tag.dom_id, tag.name
+
+    %div.new-tag
+      = label_tag :new_tag_name, "New tag"
+      = text_field_tag :new_tag_name
+      = submit_tag "Add tag", id: "create-new-tag"
+
+  %div.submit
+    - if @form.new?
+      = f.submit "Create post"
+    - else
+      = f.submit "Save post"

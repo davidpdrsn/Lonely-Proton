@@ -17,6 +17,19 @@ describe PostsController do
       expect(subject).to redirect_to Post.last
     end
 
+    it 'creates the post with tags' do
+      http_login
+      tag = create :tag
+
+      post :create, post: {
+        title: "title",
+        markdown: "markdown",
+        tag_ids: [tag.id.to_s],
+      }
+
+      expect(Post.last.tags).to include tag
+    end
+
     it 'does not create the post if its invalid' do
       http_login
 
@@ -51,6 +64,17 @@ describe PostsController do
 
       expect(Post.find(post.id).title).to eq "New title"
       expect(subject).to set_the_flash[:notice]
+    end
+
+    it 'updates the tags' do
+      http_login
+      tag = create :tag, name: 'javascript'
+      new_tag = create :tag, name: 'ruby'
+      post = create :post, tags: [tag]
+      patch :update, id: post.id, post: { tag_ids: [new_tag.id.to_s] }
+
+      expect(Post.find(post.id).tags).to include new_tag
+      expect(Post.find(post.id).tags).not_to include tag
     end
 
     it 'does not update the post if the params are invalid' do

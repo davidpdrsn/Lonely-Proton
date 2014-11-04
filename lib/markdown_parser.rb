@@ -2,13 +2,6 @@ require 'redcarpet'
 
 class MarkdownParser
   def initialize
-    options = {
-      hard_wrap: true,
-      autolink: true,
-      filter_html: true,
-    }
-
-    renderer = Redcarpet::Render::HTML.new(options)
     @parser = Redcarpet::Markdown.new(renderer)
   end
 
@@ -19,4 +12,14 @@ class MarkdownParser
   private
 
   attr_reader :parser
+
+  OPTIONS = {
+    hard_wrap: true,
+    autolink: true,
+    filter_html: true,
+  }
+
+  def renderer
+    Redcarpet::Render::HTML.new(OPTIONS)
+  end
 end

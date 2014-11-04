@@ -25,10 +25,12 @@ group :test do
   gem 'capybara-webkit'
   gem 'factory_girl_rails'
   gem 'shoulda-matchers', require: false
+  gem 'database_cleaner'
 end
 
 group :test, :development do
   gem 'konacha'
+  gem 'launchy'
   gem 'pry-rails'
   gem 'rspec-rails'
 end

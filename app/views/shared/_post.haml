@@ -1,6 +1,12 @@
 %article.post
   %h1
     = link_to post.title, post
+  %div.tags
+    %ul
+      - post.tags.each do |tag|
+        %li
+          = tag.name
+
   %div.post_contents
     = post.html.html_safe
     = post.pretty_date
