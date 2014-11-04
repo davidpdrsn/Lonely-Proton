@@ -17,6 +17,11 @@ gem 'high_voltage'
 gem 'autoprefixer-rails'
 gem 'redcarpet'
 
+gem 'capistrano'
+gem 'capistrano-rbenv'
+gem 'capistrano-bundler'
+gem 'capistrano-rails'
+
 group :development do
   gem 'foreman'
   gem 'spring'
