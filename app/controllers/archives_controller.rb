@@ -1,5 +1,5 @@
 class ArchivesController < ApplicationController
   def index
-    @posts = Post.all
+    @posts = DecoratedCollection.new(Post.sorted, PostWithPrettyDate)
   end
 end

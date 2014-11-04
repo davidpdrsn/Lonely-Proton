@@ -1,12 +1,19 @@
 %article.post
   %h1
-    = link_to post.title, post
-  %div.tags
-    %ul
-      - post.tags.each do |tag|
-        %li
-          = tag.name
+    = link_to "☉", post, title: "Permalink", class: "permalink"
+    - if post.link?
+      = link_to post.title, post.link, class: 'external-link'
+    - else
+      = post.title
 
-  %div.post_contents
-    = post.html.html_safe
+  - if post.tags.present?
+    %div.tags
+      %ul
+        - post.tags.each do |tag|
+          %li
+            = tag.name
+
+  = post.html.html_safe
+
+  %time{ pubdate: true }
     = post.pretty_date

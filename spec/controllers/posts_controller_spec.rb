@@ -1,6 +1,14 @@
 require 'rails_helper'
 
 describe PostsController do
+  describe '#index' do
+    it 'shows the newest post first' do
+      allow(Post).to receive(:sorted)
+      get :index
+      expect(Post).to have_received(:sorted)
+    end
+  end
+
   describe '#create' do
     it 'requires authentication' do
       post :create, post: { title: "title", markdown: "markdown" }
@@ -11,10 +19,11 @@ describe PostsController do
       http_login
 
       expect do
-        post :create, post: { title: "title", markdown: "markdown" }
+        post :create, post: { title: "title", markdown: "markdown", link: "http://google.com" }
       end.to change { Post.count }.by 1
 
       expect(subject).to redirect_to Post.last
+      expect(Post.last.link).to eq "http://google.com"
     end
 
     it 'creates the post with tags' do

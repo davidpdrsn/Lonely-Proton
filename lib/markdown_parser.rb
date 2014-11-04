@@ -1,25 +1,22 @@
-require 'redcarpet'
+require 'github/markdown'
 
 class MarkdownParser
   def initialize
-    @parser = Redcarpet::Markdown.new(renderer)
+    @parser = GitHub::Markdown
   end
 
   def parse(markdown)
-    parser.render(markdown)
+    html = parser.render(markdown)
+
+    if html.match(/<code>/)
+      language = html.match(/lang="(?<language>.+)"/)[:language]
+      html.gsub("<code>", "<code class=\"language-#{language}\">")
+    else
+      html
+    end
   end
 
   private
 
   attr_reader :parser
-
-  OPTIONS = {
-    hard_wrap: true,
-    autolink: true,
-    filter_html: true,
-  }
-
-  def renderer
-    Redcarpet::Render::HTML.new(OPTIONS)
-  end
 end

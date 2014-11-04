@@ -19,4 +19,13 @@ describe Post do
     expect(parser).to have_received(:parse).with(markdown)
     expect(post.html).to eq html
   end
+
+  describe '#sorted' do
+    it 'returns the newest post first' do
+      create :post, title: "old"
+      create :post, title: "new"
+
+      expect(Post.sorted.map(&:title)).to eq ['new', 'old']
+    end
+  end
 end

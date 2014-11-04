@@ -1,0 +1,115 @@
+@mixin box_sizing($arg) {
+  @include prefixer(box-sizing, $arg, webkit moz spec)
+}
+
+@mixin transition($arg) {
+  @include prefixer(transition, $arg, webkit moz spec)
+}
+
+@mixin transform($arg) {
+  @include prefixer(transform, $arg, webkit spec)
+}
+
+@mixin animation($arg) {
+  @include prefixer(animation, $arg, webkit spec)
+}
+
+@mixin transform_origin($arg) {
+  @include prefixer(transform-origin, $arg, webkit spec)
+}
+
+@mixin appearance($arg) {
+  @include prefixer(appearance, $arg, webkit)
+}
+
+@mixin keyframes($name) {
+  @-webkit-keyframes $name {
+    @content;
+  }
+  @keyframes $name {
+    @content;
+  }
+}
+
+@mixin prefixer ($property, $value, $prefixes) {
+  @each $prefix in $prefixes {
+    @if $prefix == webkit {
+      -webkit-#{$property}: $value;
+    }
+    @else if $prefix == moz {
+      -moz-#{$property}: $value;
+    }
+    @else if $prefix == ms {
+      -ms-#{$property}: $value;
+    }
+    @else if $prefix == o {
+      -o-#{$property}: $value;
+    }
+    @else if $prefix == spec {
+      #{$property}: $value;
+    }
+    @else  {
+      @warn "Unrecognized prefix: #{$prefix}";
+    }
+  }
+}
+
+@mixin image_replacement {
+  display: block;
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+  }
+}
+
+@mixin abs_center_vert($width) {
+  position: absolute;
+  top: 50%;
+  margin-top: -($width / 2);
+}
+
+@mixin abs_center_hori($height) {
+  position: absolute;
+  left: 50%;
+  margin-left: -($height / 2);
+}
+
+@mixin clearfix {
+  zoom: 1;
+  &:before,
+  &:after {
+    content: "";
+    display: table;
+  }
+  &:after {
+    clear: both;
+  }
+}
+
+@mixin reset_input {
+  -webkit-appearance: none;
+  margin: 0;
+  border-radius: 0;
+  border: none;
+  padding: 0;
+  height: auto;
+  box-shadow: none;
+}
+
+@mixin empty_after {
+  &:after {
+    content: '';
+    display: block;
+    @content;
+  }
+}
+
+@mixin empty_before {
+  &:before {
+    content: '';
+    display: block;
+    @content;
+  }
+}
