@@ -8,7 +8,7 @@ describe 'archives/index.haml' do
   end
 
   it 'shows the titles of all the posts' do
-    post = create :post, markdown: "markdown"
+    post = PostWithPrettyDate.new(create :post, markdown: "markdown")
     assign :posts, [post]
     render
     expect(rendered).to include post.title
