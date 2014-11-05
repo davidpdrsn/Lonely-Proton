@@ -14,17 +14,11 @@ set :rbenv_map_bins, %w{rake gem bundle ruby rails}
 set :rbenv_roles, :all
 
 namespace :deploy do
-  desc 'Precompile assets'
-  task :compile_assets do
-    on roles(:app), in: :sequence, wait: 5 do
-      execute "cd #{current_path} && bundle exec rake RAILS_ENV=#{fetch :stage} assets:precompile --trace"
-    end
-  end
-
   desc 'Restart application'
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
-      execute "touch #{fetch :deploy_to}/shared/tmp/restart.txt"
+      execute "cd #{current_path} && bundle exec rake RAILS_ENV=#{fetch :stage} assets:precompile --trace"
+      execute "sudo /etc/init.d/apache2 restart"
     end
   end
 
