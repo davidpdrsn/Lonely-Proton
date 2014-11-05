@@ -10,5 +10,3 @@ class @PreviewMarkdown
     markdown = $(@textareaSelector).val()
     @parser.parse markdown, (html) =>
       $(@previewSelector).html(html)
-# TODO: Test that this line gets called
-      Prism.highlightAll true, ->
