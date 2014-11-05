@@ -3,12 +3,23 @@
 
 describe "PreviewMarkdown", ->
   it "updates the preview element when new text is entered in the textarea", ->
-    html = "<strong>hi</strong>"
     setupDom()
-    newPreviewMarkdown(html).bindEvents()
-    $(".textarea").val("**hi**")
+
+    first = true
+    markdownParser = {
+      parse: (_markdown, callback) ->
+        if first
+          callback "<strong>bar</strong>"
+          first = false
+        else
+          callback "<strong>foo</strong>"
+    }
+
+    new PreviewMarkdown(markdownParser, "textarea", ".preview").bindEvents()
+    $(".textarea").val("**foo**")
     $(document).trigger("keyup")
-    expect($(".preview").html()).to.equal(html)
+    console.log $(".preview").html()
+    expect($(".preview").html()).to.equal("<strong>foo</strong>")
 
   it 'updates the preview when the page loads', ->
     html = "<strong>hi</strong>"

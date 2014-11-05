@@ -2,8 +2,9 @@ class @PreviewMarkdown
   constructor: (@parser, @textareaSelector, @previewSelector) ->
 
   bindEvents: ->
-    @._updatePreview()
-    $(document).on "keyup", $(@textarea), => @._updatePreview()
+    if $(@textareaSelector).length
+      @._updatePreview()
+      $(document).on "keyup", $(@textareaSelector), => @._updatePreview()
 
   _updatePreview: ->
     markdown = $(@textareaSelector).val()
