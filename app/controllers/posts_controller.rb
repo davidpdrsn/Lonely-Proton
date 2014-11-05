@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
-  before_filter :require_authentication, only: [:create, :new, :edit, :update]
+  before_filter :require_authentication, only: [:create, :new, :edit,
+                                                :update, :destroy]
 
   def index
     @posts = DecoratedCollection.new(Post.sorted.published, decorator)
@@ -47,6 +48,11 @@ class PostsController < ApplicationController
       flash.alert = "Post not updated"
       render :edit
     end
+  end
+
+  def destroy
+    Post.find_by(id: params[:id]).try(:destroy)
+    redirect_to admin_path
   end
 
   private
