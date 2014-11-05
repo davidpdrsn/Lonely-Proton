@@ -1,8 +1,8 @@
-require 'rails_helper'
+require "rails_helper"
 
 describe PostsController do
-  describe '#index' do
-    it 'shows the newest post first and only drafts' do
+  describe "#index" do
+    it "shows the newest post first and only drafts" do
       allow(Post).to receive(:sorted).and_return(Post)
       allow(Post).to receive(:published)
 
@@ -13,13 +13,13 @@ describe PostsController do
     end
   end
 
-  describe '#create' do
-    it 'requires authentication' do
+  describe "#create" do
+    it "requires authentication" do
       post :create, post: { title: "title", markdown: "markdown" }
       expect(response.status).to eq 401
     end
 
-    it 'creates the post if its valid' do
+    it "creates the post if its valid" do
       http_login
 
       expect do
@@ -36,7 +36,7 @@ describe PostsController do
       expect(Post.last.draft?).to eq true
     end
 
-    it 'creates the post with tags' do
+    it "creates the post with tags" do
       http_login
       tag = create :tag
 
@@ -49,7 +49,7 @@ describe PostsController do
       expect(Post.last.tags).to include tag
     end
 
-    it 'does not create the post if its invalid' do
+    it "does not create the post if its invalid" do
       http_login
 
       expect do
@@ -61,22 +61,22 @@ describe PostsController do
     end
   end
 
-  describe '#new' do
-    it 'requires authentication' do
+  describe "#new" do
+    it "requires authentication" do
       get :new
       expect(response.status).to eq 401
     end
   end
 
-  describe '#edit' do
-    it 'requires authentication' do
+  describe "#edit" do
+    it "requires authentication" do
       get :edit, id: 1
       expect(response.status).to eq 401
     end
   end
 
-  describe '#update' do
-    it 'updates the post' do
+  describe "#update" do
+    it "updates the post" do
       http_login
       post = create :post, title: "Old title"
       patch :update, id: post.id, post: { title: "New title" }
@@ -85,10 +85,10 @@ describe PostsController do
       expect(subject).to set_the_flash[:notice]
     end
 
-    it 'updates the tags' do
+    it "updates the tags" do
       http_login
-      tag = create :tag, name: 'javascript'
-      new_tag = create :tag, name: 'ruby'
+      tag = create :tag, name: "javascript"
+      new_tag = create :tag, name: "ruby"
       post = create :post, tags: [tag]
       patch :update, id: post.id, post: { tag_ids: [new_tag.id.to_s] }
 
@@ -96,7 +96,7 @@ describe PostsController do
       expect(Post.find(post.id).tags).not_to include tag
     end
 
-    it 'does not update the post if the params are invalid' do
+    it "does not update the post if the params are invalid" do
       http_login
       post = create :post, title: "Old title"
       patch :update, id: post.id, post: { title: nil }
@@ -106,10 +106,33 @@ describe PostsController do
       expect(subject).to set_the_flash[:alert]
     end
 
-    it 'requires authentication' do
+    it "requires authentication" do
       post = create :post
-      patch :update, id: post.id, post: { title: 'new title' }
+      patch :update, id: post.id, post: { title: "new title" }
       expect(subject.status).to eq 401
+    end
+  end
+
+  describe "#destroy" do
+    it "requires authentication" do
+      delete :destroy, id: 1
+      expect(response.status).to eq 401
+    end
+
+    it "deletes a post" do
+      http_login
+      post = create :post
+      expect do
+        delete :destroy, id: post.id
+      end.to change { Post.count }.by -1
+
+      expect(subject).to redirect_to admin_path
+    end
+
+    it "does not blow up if the post ins't found" do
+      http_login
+      delete :destroy, id: 1
+      expect(subject).to redirect_to admin_path
     end
   end
 end
