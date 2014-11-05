@@ -1,3 +1,6 @@
+%div.field
+  %button.toggle-article-preview Hide preview
+
 %div.article__preview__markdown-parse-method
   %div
     %input{ type: 'radio', name: 'markdown-parse-method', value: 'native', id: 'native-parse' }
@@ -6,5 +9,7 @@
   %div
     %input{ type: 'radio', name: 'markdown-parse-method', value: 'api', id: 'parse-api' }
     %label{ for: 'parse-api' } Parse using API (slower, but more accurate)
+
+%hr
 
 %div.article__preview

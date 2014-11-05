@@ -344,3 +344,45 @@ pre {
   width: 200px;
   margin: 0 auto;
 }
+
+form {
+  label,
+  input:not([type=submit]),
+  textarea,
+  select {
+    display: block;
+    width: 100%;
+  }
+
+  input[type=checkbox],
+  input[type=radio] {
+    display: inline;
+    width: auto;
+    float: left;
+    margin-right: .25rem;
+    position: relative;
+    top: 4px;
+  }
+
+  .field {
+    margin-bottom: 1rem;
+  }
+
+  .compose-field {
+    height: 300px;
+  }
+}
+
+.preview-markdown,
+.new-post-fields {
+  float: left;
+  width: 50%;
+}
+
+.preview-markdown {
+  padding-left: .5rem;
+}
+
+.new-post-fields {
+  padding-right: .5rem;
+}

@@ -14,6 +14,19 @@ $ ->
       $(el).attr 'title', $(el).attr('href')
 
 $ ->
+  $("button.toggle-article-preview").click (e) ->
+    e.preventDefault()
+    if $(@).text() == "Hide preview"
+      $(".article__preview__markdown-parse-method, .article__preview").hide()
+      $(".new-post-fields").animate({ width: "90%" }, 250)
+      $(".preview-markdown").animate({ width: "10%" }, 250)
+      $(@).text("Show preview")
+    else
+      $(".article__preview__markdown-parse-method, .article__preview").show()
+      $(".preview-markdown, .new-post-fields").animate({ width: "50%" }, 250)
+      $(@).text("Hide preview")
+
+$ ->
 
   $(document).on "click", "#create-new-tag", (e) ->
     e.preventDefault()

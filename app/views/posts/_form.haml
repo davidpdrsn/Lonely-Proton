@@ -1,38 +1,39 @@
 = form_for @form.post do |f|
-  %div.field
-    = f.label :title
-    = f.text_field :title
+  %div.new-post-fields
+    %div.field
+      = f.label :title
+      = f.text_field :title
 
-  %div.field
-    = f.label :markdown
-    = f.text_area :markdown
+    %div.field
+      = f.label :markdown
+      = f.text_area :markdown, class: "compose-field"
 
-  %div.field
-    = f.label :link
-    = f.url_field :link
+    %div.field
+      = f.label :link
+      = f.text_field :link
 
-  = render 'preview_markdown'
 
-  %div.field
-    %p
+    %div.field
       Tags:
+      %div.tags
+        - @form.tags.each do |tag|
+          %div.tag
+            = check_box_tag "post[tag_ids][]",
+              tag.id,
+              @form.post.tags.any? {|post_tag| tag == post_tag},
+              id: tag.dom_id
+            = label_tag tag.dom_id, tag.name
 
-    %div.tags
-      - @form.tags.each do |tag|
-        %div.tag
-          = check_box_tag "post[tag_ids][]",
-            tag.id,
-            @form.post.tags.any? {|post_tag| tag == post_tag},
-            id: tag.dom_id
-          = label_tag tag.dom_id, tag.name
+      %div.new-tag
+        = label_tag :new_tag_name, "New tag"
+        = text_field_tag :new_tag_name
+        = submit_tag "Add tag", id: "create-new-tag"
 
-    %div.new-tag
-      = label_tag :new_tag_name, "New tag"
-      = text_field_tag :new_tag_name
-      = submit_tag "Add tag", id: "create-new-tag"
+    %div.submit
+      - if @form.new?
+        = f.submit "Create post"
+      - else
+        = f.submit "Save post"
 
-  %div.submit
-    - if @form.new?
-      = f.submit "Create post"
-    - else
-      = f.submit "Save post"
+  %div.preview-markdown
+    = render 'preview_markdown'

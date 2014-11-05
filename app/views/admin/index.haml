@@ -1,9 +1,15 @@
 = link_to "Create new post", new_post_path
 
-%div.posts
+%div
   - if @posts.present?
-    - @posts.each do |post|
-      = post.title
-      = link_to "Edit", edit_post_path(post)
+    %ul
+      - @posts.each do |post|
+        %li
+          = post.title
+          |
+          = link_to "Edit", edit_post_path(post)
+          |
+          -# TODO: make destroy post
+          = link_to "Destroy", "javascript:alert('Not implemented yet')"
   - else
     There are no posts yet
