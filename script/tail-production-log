@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+
+ssh deployer@178.62.163.33 tail -f /home/deployer/apps/lonely_proton/shared/log/production.log

@@ -6,29 +6,30 @@ feature "viewing posts" do
     expect(page).to have_content "There are no posts yet"
   end
 
-  scenario "sees the posts", focus: true do
-    post = create :post
+  scenario "sees the posts" do
+    create_post_and_visit_root(title: "its all good")
 
-    visit root_path
-
-    expect(page).to have_content post.title
+    expect(page).to have_content "its all good"
   end
 
   scenario "sees the parsed markdown as html" do
-    create :post, markdown: "**hi**"
-    visit root_path
+    create_post_and_visit_root(markdown: "**hi**")
+
     within "article.post strong" do
       expect(page).to have_content "hi"
     end
   end
 
   scenario "sees the date the post was created" do
-    create :post, created_at: Time.parse("2001-12-12 20")
-
-    visit root_path
+    create_post_and_visit_root created_at: Time.parse("2001-12-12 20")
 
     within "article.post" do
       expect(page).to have_content "12/12/2001"
     end
+  end
+
+  def create_post_and_visit_root(options = {})
+    create :post, options
+    visit root_path
   end
 end
