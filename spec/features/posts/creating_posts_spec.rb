@@ -36,7 +36,7 @@ feature 'creating posts' do
     expect(page).to have_content "JavaScript"
   end
 
-  xscenario 'creates a post with a new tag', js: true do
+  scenario 'creating a draft and only seeing it in the admin backend' do
     title = "A post"
 
     authenticate
@@ -44,12 +44,16 @@ feature 'creating posts' do
     click_link "Create new post"
     fill_in "Title", with: title
     fill_in "Markdown", with: "**hi**"
-    fill_in "New tag", with: "Functional programming"
-    click_button "Add tag"
+    check "Draft"
     click_button "Create post"
     visit root_path
 
+    expect(page).not_to have_content title
+
+    visit archives_path
+    expect(page).not_to have_content title
+
+    visit admin_path
     expect(page).to have_content title
-    expect(page).to have_content "Functional programming"
   end
 end

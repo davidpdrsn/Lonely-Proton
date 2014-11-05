@@ -33,4 +33,12 @@ describe Post do
       expect(Post.sorted.map(&:title)).to eq ['new', 'old']
     end
   end
+
+  describe '#published' do
+    it 'does not include drafts' do
+      draft = create :post, draft: true
+      published = create :post, draft: false
+      expect(Post.published).to eq [published]
+    end
+  end
 end

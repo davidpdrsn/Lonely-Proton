@@ -2,10 +2,14 @@ require 'rails_helper'
 
 describe PostsController do
   describe '#index' do
-    it 'shows the newest post first' do
-      allow(Post).to receive(:sorted)
+    it 'shows the newest post first and only drafts' do
+      allow(Post).to receive(:sorted).and_return(Post)
+      allow(Post).to receive(:published)
+
       get :index
+
       expect(Post).to have_received(:sorted)
+      expect(Post).to have_received(:published)
     end
   end
 
@@ -19,11 +23,17 @@ describe PostsController do
       http_login
 
       expect do
-        post :create, post: { title: "title", markdown: "markdown", link: "http://google.com" }
+        post :create, post: {
+          title: "title",
+          markdown: "markdown",
+          link: "http://google.com",
+          draft: true,
+        }
       end.to change { Post.count }.by 1
 
       expect(subject).to redirect_to Post.last
       expect(Post.last.link).to eq "http://google.com"
+      expect(Post.last.draft?).to eq true
     end
 
     it 'creates the post with tags' do

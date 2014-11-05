@@ -7,9 +7,8 @@ class Post < ActiveRecord::Base
 
   before_save :parse_and_save_markdown
 
-  def self.sorted
-    order('created_at DESC')
-  end
+  scope :sorted, -> { order('created_at DESC') }
+  scope :published, -> { where('draft = false') }
 
   def to_param
     [id, title.parameterize].join("-")

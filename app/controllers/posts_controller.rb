@@ -2,7 +2,7 @@ class PostsController < ApplicationController
   before_filter :require_authentication, only: [:create, :new, :edit, :update]
 
   def index
-    @posts = DecoratedCollection.new(Post.sorted, decorator)
+    @posts = DecoratedCollection.new(Post.sorted.published, decorator)
   end
 
   def show
@@ -52,7 +52,7 @@ class PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit :title, :markdown, :link
+    params.require(:post).permit :title, :markdown, :link, :draft
   end
 
   def decorator
