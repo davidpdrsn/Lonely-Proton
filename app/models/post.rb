@@ -3,6 +3,7 @@ class Post < ActiveRecord::Base
 
   validates :markdown, presence: true
   validates :title, presence: true
+  validates :title, uniqueness: true
 
   before_save :parse_and_save_markdown
 

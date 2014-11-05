@@ -6,6 +6,11 @@ describe Post do
   it { should validate_presence_of :markdown }
   it { should have_and_belong_to_many :tags }
 
+  it 'should validate uniqueness of title' do
+    post = create :post, title: "title"
+    expect(build :post, title: "title").to_not be_valid
+  end
+
   it 'automatically generates its html before save' do
     markdown = '**hi**'
     html = '<p><strong>hi</strong></p>'
