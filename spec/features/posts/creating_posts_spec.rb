@@ -3,18 +3,11 @@ require 'rails_helper'
 feature 'creating posts' do
   scenario 'user creates a post' do
     title = "A post"
-
-    authenticate
-    visit admin_path
-    click_link "Create new post"
-    fill_in "Title", with: title
-    fill_in "Markdown", with: "**hi**"
-    click_button "Create post"
-    visit root_path
+    create_post(title: title)
 
     expect(page).to have_content title
     within "article.post strong" do
-      expect(page).to have_content 'hi'
+      expect(page).to have_content "hi"
     end
   end
 
@@ -23,14 +16,9 @@ feature 'creating posts' do
 
     title = "A post"
 
-    authenticate
-    visit admin_path
-    click_link "Create new post"
-    fill_in "Title", with: title
-    fill_in "Markdown", with: "**hi**"
-    check "tag-javascript"
-    click_button "Create post"
-    visit root_path
+    create_post_but_before_save(title: title) do
+      check "tag-javascript"
+    end
 
     expect(page).to have_content title
     expect(page).to have_content "JavaScript"
@@ -39,14 +27,9 @@ feature 'creating posts' do
   scenario 'creating a draft and only seeing it in the admin backend' do
     title = "A post"
 
-    authenticate
-    visit admin_path
-    click_link "Create new post"
-    fill_in "Title", with: title
-    fill_in "Markdown", with: "**hi**"
-    check "Draft"
-    click_button "Create post"
-    visit root_path
+    create_post_but_before_save(title: title) do
+      check "Draft"
+    end
 
     expect(page).not_to have_content title
 
@@ -56,4 +39,19 @@ feature 'creating posts' do
     visit admin_path
     expect(page).to have_content title
   end
+
+  def create_post(options = {})
+    authenticate
+    visit admin_path
+    click_link "Create new post"
+    fill_in "Title", with: options[:title] || "Learning iOS"
+    fill_in "Markdown", with: "**hi**"
+    if block_given?
+      yield
+    end
+    click_button "Create post"
+    visit root_path
+  end
+
+  alias_method :create_post_but_before_save, :create_post
 end
