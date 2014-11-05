@@ -6,12 +6,16 @@ set -e
 # Setup binstubs via hack in PATH
 mkdir -p .git/safe
 
+# Install dependencies
 bundle install
 
+# Make binstubs
 bundle exec spring binstub --all
 
-bundle exec rake db:setup db:migrate
+# Setup the database
+bundle exec rake db:setup db:migrate db:seed
 
+# Copy the example application.yml file to its real destination and tell user to update it
 if [ ! -f config/application.yml ]; then
   cp config/application.yml.sample config/application.yml
   echo "Setup config/application.yml with real data"
