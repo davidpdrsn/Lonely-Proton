@@ -15,7 +15,7 @@ feature "viewing posts" do
   end
 
   scenario "sees the parsed markdown as html" do
-    post = create :post, markdown: "**hi**"
+    create :post, markdown: "**hi**"
     visit root_path
     within "article.post strong" do
       expect(page).to have_content "hi"
@@ -23,7 +23,7 @@ feature "viewing posts" do
   end
 
   scenario "sees the date the post was created" do
-    post = create :post, created_at: Time.parse("2001-12-12 20")
+    create :post, created_at: Time.parse("2001-12-12 20")
 
     visit root_path
 

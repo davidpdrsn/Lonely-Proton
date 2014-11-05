@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
-  before_filter :require_authentication, only: [:create, :new, :edit, :update, :destroy]
+  before_filter :require_authentication, only: [:create, :new, :edit,
+                                                :update, :destroy]
 
   def index
     @posts = DecoratedCollection.new(Post.sorted.published, decorator)
