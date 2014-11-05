@@ -3,7 +3,7 @@ require 'spec_helper'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'capybara/rails'
-require 'shoulda-matchers'
+require 'shoulda/matchers'
 require 'database_cleaner'
 
 Capybara.javascript_driver = :webkit

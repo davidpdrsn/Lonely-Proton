@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :post do
-    title 'Learning iOS'
+    sequence(:title) { |n| "Learning iOS #{n}" }
     markdown 'its **fun** to learn ios, but also quite hard'
   end
 
