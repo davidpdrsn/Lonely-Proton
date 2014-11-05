@@ -1,7 +1,6 @@
 #= require jquery
 #= require jquery_ujs
 #= require turbolinks
-#= require prism
 #= require_tree .
 
 p = -> console.log.apply console, arguments

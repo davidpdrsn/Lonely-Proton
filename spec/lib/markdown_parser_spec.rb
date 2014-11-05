@@ -18,7 +18,6 @@ describe MarkdownParser do
 
     expect(html).to include "code"
     expect(html).to include 'lang="javascript"'
-    expect(html).to include 'class="language-javascript"'
     expect(html).to include "pre"
   end
 end
