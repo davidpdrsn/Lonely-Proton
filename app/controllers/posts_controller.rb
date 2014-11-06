@@ -3,7 +3,7 @@ class PostsController < ApplicationController
                                                 :update, :destroy]
 
   def index
-    @posts = DecoratedCollection.new(Post.sorted.published, decorator)
+    @posts = DecoratedCollection.new(Post.recently_published_first, decorator)
   end
 
   def show
@@ -17,6 +17,12 @@ class PostsController < ApplicationController
 
   def create
     @post = Post.new(post_params)
+
+    if params[:draft]
+      @post.published_at = nil
+    else
+      @post.published_at = Time.now
+    end
 
     tag_ids = params[:post].fetch(:tag_ids, [])
     associate(records_with_ids: tag_ids, of_type: Tag, with_record: @post)
@@ -38,6 +44,12 @@ class PostsController < ApplicationController
   def update
     @post = Post.find(params[:id])
 
+    if params[:draft]
+      @post.published_at = nil
+    else
+      @post.published_at = Time.now
+    end
+
     tag_ids = params[:post].fetch(:tag_ids, [])
     associate(records_with_ids: tag_ids, of_type: Tag, with_record: @post)
 
@@ -58,7 +70,7 @@ class PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit :title, :markdown, :link, :draft
+    params.require(:post).permit :title, :markdown, :link
   end
 
   def decorator

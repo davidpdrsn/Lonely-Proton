@@ -3,13 +3,9 @@ require 'rails_helper'
 describe ArchivesController do
   describe '#index' do
     it 'shows the newest post first' do
-      allow(Post).to receive(:sorted).and_return(Post)
-      allow(Post).to receive(:published)
-
+      allow(Post).to receive(:recently_published_first)
       get :index
-
-      expect(Post).to have_received(:sorted)
-      expect(Post).to have_received(:published)
+      expect(Post).to have_received(:recently_published_first)
     end
   end
 end

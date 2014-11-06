@@ -7,11 +7,24 @@ class Post < ActiveRecord::Base
 
   before_save :parse_and_save_markdown
 
-  scope :sorted, -> { order('created_at DESC') }
-  scope :published, -> { where('draft = false') }
+  def self.recently_published_first
+    where.not(published_at: nil).order("published_at desc")
+  end
+
+  def self.recently_created_first
+    order("created_at desc")
+  end
 
   def to_param
     [id, title.parameterize].join("-")
+  end
+
+  def published?
+    published_at?
+  end
+
+  def draft?
+    !(published? || new_record?)
   end
 
   private

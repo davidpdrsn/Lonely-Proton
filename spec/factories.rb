@@ -2,7 +2,7 @@ FactoryGirl.define do
   factory :post do
     sequence(:title) { |n| "Learning iOS #{n}" }
     markdown 'its **fun** to learn ios, but also quite hard'
-    draft false
+    published_at Time.now
   end
 
   factory :tag do
