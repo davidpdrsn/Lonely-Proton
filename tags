@@ -1,0 +1,80 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+==	app/models/tag.rb	/^  def ==(another_tag)$/;"	f	class:Tag
+A	spec/helpers/title_helper_spec.rb	/^class A$/;"	c
+AddDraftToPost	db/migrate/20141105094426_add_draft_to_post.rb	/^class AddDraftToPost < ActiveRecord::Migration$/;"	c
+AddHtmlToPosts	db/migrate/20141031202404_add_html_to_posts.rb	/^class AddHtmlToPosts < ActiveRecord::Migration$/;"	c
+AddLinkToPosts	db/migrate/20141104195650_add_link_to_posts.rb	/^class AddLinkToPosts < ActiveRecord::Migration$/;"	c
+AdminController	app/controllers/admin_controller.rb	/^class AdminController < ApplicationController$/;"	c
+Api	app/controllers/api/markdown_parser_controller.rb	/^module Api$/;"	m
+Application	config/application.rb	/^  class Application < Rails::Application$/;"	c	class:LonelyProton
+ApplicationController	app/controllers/application_controller.rb	/^class ApplicationController < ActionController::Base$/;"	c
+ApplicationHelper	app/helpers/application_helper.rb	/^module ApplicationHelper$/;"	m
+ArchivesController	app/controllers/archives_controller.rb	/^class ArchivesController < ApplicationController$/;"	c
+CompositeDecorator	lib/composite_decorator.rb	/^class CompositeDecorator$/;"	c
+CreatePosts	db/migrate/20141031200025_create_posts.rb	/^class CreatePosts < ActiveRecord::Migration$/;"	c
+CreatePostsTags	db/migrate/20141101162908_create_posts_tags.rb	/^class CreatePostsTags < ActiveRecord::Migration$/;"	c
+CreateTags	db/migrate/20141101163110_create_tags.rb	/^class CreateTags < ActiveRecord::Migration$/;"	c
+DecoratedCollection	lib/decorated_collection.rb	/^class DecoratedCollection$/;"	c
+DecoratorA	spec/lib/composite_decorator_spec.rb	/^class DecoratorA < SimpleDelegator$/;"	c
+DecoratorA	spec/lib/decorated_collection_spec.rb	/^class DecoratorA < SimpleDelegator$/;"	c
+DecoratorB	spec/lib/composite_decorator_spec.rb	/^class DecoratorB < SimpleDelegator$/;"	c
+LonelyProton	config/application.rb	/^module LonelyProton$/;"	m
+MarkdownParser	lib/markdown_parser.rb	/^class MarkdownParser$/;"	c
+MarkdownParserController	app/controllers/api/markdown_parser_controller.rb	/^  class MarkdownParserController < ApplicationController$/;"	c	class:Api
+NewPostForm	app/models/new_post_form.rb	/^class NewPostForm$/;"	c
+Post	app/models/post.rb	/^class Post < ActiveRecord::Base$/;"	c
+PostWithPrettyDate	app/models/post_with_pretty_date.rb	/^class PostWithPrettyDate < SimpleDelegator$/;"	c
+PostsController	app/controllers/posts_controller.rb	/^class PostsController < ApplicationController$/;"	c
+Tag	app/models/tag.rb	/^class Tag < ActiveRecord::Base$/;"	c
+TagWithDomId	app/models/tag_with_dom_id.rb	/^class TagWithDomId < SimpleDelegator$/;"	c
+TagsController	app/controllers/tags_controller.rb	/^class TagsController < ApplicationController$/;"	c
+TitleHelper	app/helpers/title_helper.rb	/^module TitleHelper$/;"	m
+added_method	spec/lib/decorated_collection_spec.rb	/^  def added_method$/;"	f	class:DecoratorA
+associate	app/controllers/posts_controller.rb	/^  def associate(records_with_ids:, of_type:, with_record:)$/;"	f	class:PostsController
+authenticate	spec/support/http_login_helpers.rb	/^def authenticate$/;"	f
+change	db/migrate/20141031200025_create_posts.rb	/^  def change$/;"	f	class:CreatePosts
+change	db/migrate/20141031202404_add_html_to_posts.rb	/^  def change$/;"	f	class:AddHtmlToPosts
+change	db/migrate/20141101162908_create_posts_tags.rb	/^  def change$/;"	f	class:CreatePostsTags
+change	db/migrate/20141101163110_create_tags.rb	/^  def change$/;"	f	class:CreateTags
+change	db/migrate/20141104195650_add_link_to_posts.rb	/^  def change$/;"	f	class:AddLinkToPosts
+change	db/migrate/20141105094426_add_draft_to_post.rb	/^  def change$/;"	f	class:AddDraftToPost
+create	app/controllers/posts_controller.rb	/^  def create$/;"	f	class:PostsController
+create	app/controllers/tags_controller.rb	/^  def create$/;"	f	class:TagsController
+decorate	lib/composite_decorator.rb	/^  def decorate(obj)$/;"	f	class:CompositeDecorator
+decorated_objects	lib/decorated_collection.rb	/^  def decorated_objects$/;"	f	class:DecoratedCollection
+decorator	app/controllers/posts_controller.rb	/^  def decorator$/;"	f	class:PostsController
+destroy	app/controllers/posts_controller.rb	/^  def destroy$/;"	f	class:PostsController
+dom_id	app/models/tag_with_dom_id.rb	/^  def dom_id$/;"	f	class:TagWithDomId
+each	lib/decorated_collection.rb	/^  def each(&block)$/;"	f	class:DecoratedCollection
+edit	app/controllers/posts_controller.rb	/^  def edit$/;"	f	class:PostsController
+http_login	spec/support/http_login_helpers.rb	/^def http_login$/;"	f
+index	app/controllers/admin_controller.rb	/^  def index$/;"	f	class:AdminController
+index	app/controllers/archives_controller.rb	/^  def index$/;"	f	class:ArchivesController
+index	app/controllers/posts_controller.rb	/^  def index$/;"	f	class:PostsController
+initialize	app/models/new_post_form.rb	/^  def initialize(post, tags)$/;"	f	class:NewPostForm
+initialize	lib/composite_decorator.rb	/^  def initialize(decorators)$/;"	f	class:CompositeDecorator
+initialize	lib/decorated_collection.rb	/^  def initialize(objects, decorator)$/;"	f	class:DecoratedCollection
+initialize	lib/markdown_parser.rb	/^  def initialize$/;"	f	class:MarkdownParser
+make_date	spec/models/post_with_pretty_date_spec.rb	/^  def make_date(format)$/;"	f
+method_from_a	spec/lib/composite_decorator_spec.rb	/^  def method_from_a$/;"	f	class:DecoratorA
+method_from_b	spec/lib/composite_decorator_spec.rb	/^  def method_from_b$/;"	f	class:DecoratorB
+new	app/controllers/posts_controller.rb	/^  def new$/;"	f	class:PostsController
+new	lib/composite_decorator.rb	/^  def new(obj)$/;"	f	class:CompositeDecorator
+new?	app/models/new_post_form.rb	/^  def new?$/;"	f	class:NewPostForm
+parse	app/controllers/api/markdown_parser_controller.rb	/^    def parse$/;"	f	class:Api.MarkdownParserController
+parse	lib/markdown_parser.rb	/^  def parse(markdown)$/;"	f	class:MarkdownParser
+parse_and_save_markdown	app/models/post.rb	/^  def parse_and_save_markdown$/;"	f	class:Post
+post_params	app/controllers/posts_controller.rb	/^  def post_params$/;"	f	class:PostsController
+pretty_date	app/models/post_with_pretty_date.rb	/^  def pretty_date$/;"	f	class:PostWithPrettyDate
+require_authentication	app/controllers/application_controller.rb	/^  def require_authentication$/;"	f	class:ApplicationController
+show	app/controllers/posts_controller.rb	/^  def show$/;"	f	class:PostsController
+tag_params	app/controllers/tags_controller.rb	/^  def tag_params$/;"	f	class:TagsController
+tags	app/controllers/posts_controller.rb	/^  def tags$/;"	f	class:PostsController
+title	app/helpers/title_helper.rb	/^  def title(title)$/;"	f	class:TitleHelper
+to_param	app/models/post.rb	/^  def to_param$/;"	f	class:Post
+update	app/controllers/posts_controller.rb	/^  def update$/;"	f	class:PostsController
