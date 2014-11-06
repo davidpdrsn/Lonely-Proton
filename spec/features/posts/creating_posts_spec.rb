@@ -32,26 +32,19 @@ feature 'creating posts' do
     end
 
     expect(page).not_to have_content title
+  end
+
+  scenario "creating a draft and not seeing it in the archive" do
+    title = "A post"
+
+    create_draft(title: title)
 
     visit archives_path
     expect(page).not_to have_content title
+  end
 
+  scenario "creating a post and seeing it in the admin backend" do
     visit admin_path
     expect(page).to have_content title
   end
-
-  def create_post(options = {})
-    authenticate
-    visit admin_path
-    click_link "Create new post"
-    fill_in "Title", with: options[:title] || "Learning iOS"
-    fill_in "Markdown", with: "**hi**"
-    if block_given?
-      yield
-    end
-    click_button "Create post"
-    visit root_path
-  end
-
-  alias_method :create_post_but_before_save, :create_post
 end

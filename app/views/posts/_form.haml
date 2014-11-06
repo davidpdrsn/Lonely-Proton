@@ -13,8 +13,8 @@
       = f.text_field :link
 
     %div.field
-      = f.label :draft
-      = f.check_box :draft
+      = check_box_tag :draft, "draft", @form.post.draft?
+      = label_tag :draft
 
     %div.field
       Tags:

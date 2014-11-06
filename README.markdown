@@ -4,8 +4,8 @@ TODO
 * CSS
 * RSS feed
 
-Packages required
------------------
+Packages required that might be required
+----------------------------------------
 
 * icu4c
 * libdev

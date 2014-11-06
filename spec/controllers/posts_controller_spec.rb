@@ -2,14 +2,10 @@ require "rails_helper"
 
 describe PostsController do
   describe "#index" do
-    it "shows the newest post first and only drafts" do
-      allow(Post).to receive(:sorted).and_return(Post)
-      allow(Post).to receive(:published)
-
+    it "delegates to .recently_published_first for finding the posts" do
+      allow(Post).to receive(:recently_published_first)
       get :index
-
-      expect(Post).to have_received(:sorted)
-      expect(Post).to have_received(:published)
+      expect(Post).to have_received(:recently_published_first)
     end
   end
 
@@ -27,13 +23,11 @@ describe PostsController do
           title: "title",
           markdown: "markdown",
           link: "http://google.com",
-          draft: true,
         }
       end.to change { Post.count }.by 1
 
       expect(subject).to redirect_to Post.last
       expect(Post.last.link).to eq "http://google.com"
-      expect(Post.last.draft?).to eq true
     end
 
     it "creates the post with tags" do
@@ -58,6 +52,22 @@ describe PostsController do
 
       expect(subject).to set_the_flash[:alert]
       expect(subject).to render_template :new
+    end
+
+    it "creates the post without a published_at if draft was set" do
+      http_login
+      post :create, post: attributes_for(:post), draft: true
+
+      expect(Post.last.published_at).to eq nil
+    end
+
+    it "creates the post with a published at if draft was not set" do
+      Timecop.freeze(Time.now) do
+        http_login
+        post :create, post: attributes_for(:post), draft: false
+
+        expect(Post.last.published_at).to eq Time.now
+      end
     end
   end
 
@@ -104,6 +114,22 @@ describe PostsController do
       expect(Post.find(post.id).title).to eq "Old title"
       expect(subject).to render_template :edit
       expect(subject).to set_the_flash[:alert]
+    end
+
+    it "removes the published at if post is becomes a draft" do
+      http_login
+      post = create :post
+      patch :update, id: post.id, draft: true, post: { title: post.title }
+      expect(Post.find(post.id).published_at).to eq nil
+    end
+
+    it "sets the published at if post becomes published" do
+      Timecop.freeze(Time.now) do
+        http_login
+        post = create :post, published_at: false
+        patch :update, id: post.id, draft: false, post: { title: post.title }
+        expect(Post.find(post.id).published_at).to eq Time.now
+      end
     end
 
     it "requires authentication" do

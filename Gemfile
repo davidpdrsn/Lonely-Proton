@@ -29,6 +29,7 @@ group :development do
 end
 
 group :test do
+  gem "timecop"
   gem "capybara"
   gem "capybara-webkit"
   gem "database_cleaner"
