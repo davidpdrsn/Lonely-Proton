@@ -1,8 +1,10 @@
 %h1= "Posts tagged with \"#{@tag.name}\""
 
 - if @tag.posts.present?
-  - DecoratedCollection.new(@tag.posts, PostWithPrettyDate).each do |post|
-    = link_to post.title, post
-    = "(#{post.pretty_date})"
+  %ul
+    - DecoratedCollection.new(@tag.posts, PostWithPrettyDate).each do |post|
+      %li
+        = link_to post.title, post
+        = "(#{post.pretty_date})"
 - else
   There are no posts with this tag
