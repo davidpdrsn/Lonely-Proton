@@ -4,6 +4,10 @@ class Tag < ActiveRecord::Base
   validates :name, presence: true
   validates :name, uniqueness: true
 
+  def to_param
+    [id, name.parameterize].join("-")
+  end
+
   def ==(another_tag)
     if another_tag.is_a? TagWithDomId
       another_tag == self

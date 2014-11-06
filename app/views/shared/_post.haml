@@ -11,7 +11,7 @@
       %ul
         - post.tags.each do |tag|
           %li
-            = tag.name
+            = link_to tag.name, tag
 
   = post.html.html_safe
 

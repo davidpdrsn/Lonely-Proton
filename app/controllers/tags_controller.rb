@@ -1,5 +1,13 @@
 class TagsController < ApplicationController
-  before_filter :require_authentication
+  before_filter :require_authentication, only: [:create]
+
+  def index
+    @tags = Tag.all
+  end
+
+  def show
+    @tag = Tag.find(params[:id])
+  end
 
   def create
     tag = Tag.new(tag_params)

@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   resources :posts, only: [:index, :show, :new, :create,
                            :edit, :update, :destroy]
   resources :archives, only: [:index]
+  resources :tags, only: [:index, :show]
 
   scope "/api" do
     post "/parse_markdown", to: "api/markdown_parser#parse"
