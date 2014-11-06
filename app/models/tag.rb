@@ -1,5 +1,5 @@
 class Tag < ActiveRecord::Base
-  has_and_belongs_to_many :posts
+  has_and_belongs_to_many :posts, -> { where.not published_at: nil }
 
   validates :name, presence: true
   validates :name, uniqueness: true

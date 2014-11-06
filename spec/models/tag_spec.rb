@@ -19,4 +19,13 @@ describe Tag do
       expect(Tag.find(tag.id) == tag).to eq true
     end
   end
+
+  describe ".posts" do
+    it "does not include drafts" do
+      tag = create :tag
+      post = create :post, published_at: nil, tags: [tag]
+
+      expect(tag.posts).to_not include post
+    end
+  end
 end
