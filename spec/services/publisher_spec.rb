@@ -6,7 +6,7 @@ describe Publisher do
       post = double("post", published_at: nil)
       allow(post).to receive(:published_at=)
 
-      Publisher.new(post).publish(is_draft: false)
+      Publisher.new.publish(post, is_draft: false)
 
       expect(post).to have_received(:published_at=).with(Time.now)
     end
@@ -16,7 +16,7 @@ describe Publisher do
     post = double("post")
     allow(post).to receive(:published_at=)
 
-    Publisher.new(post).publish(is_draft: true)
+    Publisher.new.publish(post, is_draft: true)
 
     expect(post).to have_received(:published_at=).with(nil)
   end
@@ -25,7 +25,7 @@ describe Publisher do
     post = double("post", published_at: Time.now)
     allow(post).to receive(:published_at=)
 
-    Publisher.new(post).publish(is_draft: false)
+    Publisher.new.publish(post, is_draft: false)
 
     expect(post).not_to have_received(:published_at=)
   end

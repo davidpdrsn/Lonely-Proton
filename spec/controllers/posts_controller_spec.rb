@@ -56,7 +56,7 @@ describe PostsController do
 
       post :create, post: attributes_for(:post), draft: true
 
-      expect(publisher).to have_received(:publish).with(is_draft: true)
+      expect(publisher).to have_received(:publish).with(a_post, is_draft: true)
     end
   end
 

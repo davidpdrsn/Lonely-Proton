@@ -18,7 +18,7 @@ class PostsController < ApplicationController
   def create
     @post = Post.new(post_params)
 
-    Publisher.new(@post).publish(is_draft: params[:draft])
+    Publisher.new.publish(@post, is_draft: params[:draft])
 
     tags = Tag.find_for_ids(params[:post][:tag_ids])
     @post.update(tags: tags)
@@ -40,7 +40,7 @@ class PostsController < ApplicationController
   def update
     @post = Post.find(params[:id])
 
-    Publisher.new(@post).publish(is_draft: params[:draft])
+    Publisher.new.publish(@post, is_draft: params[:draft])
 
     tags = Tag.find_for_ids(params[:post][:tag_ids])
     @post.update(tags: tags)
