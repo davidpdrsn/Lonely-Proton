@@ -15,6 +15,10 @@ class Post < ActiveRecord::Base
     order("created_at desc")
   end
 
+  def self.drafts
+    where(published_at: nil)
+  end
+
   def to_param
     [id, title.parameterize].join("-")
   end

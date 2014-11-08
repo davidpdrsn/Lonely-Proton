@@ -2,6 +2,9 @@ class AdminController < ApplicationController
   before_filter :require_authentication
 
   def index
-    @posts = Post.all
+    @posts = AdminDashboard.new(
+      published: Post.recently_published_first,
+      drafts: Post.drafts
+    )
   end
 end

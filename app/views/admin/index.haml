@@ -1,16 +1,17 @@
 = link_to "Create new post", new_post_path
 
 %div
-  - if @posts.present?
-    %ul
-      - @posts.each do |post|
-        %li
-          = link_to post.title, post
-          |
-          = link_to "Edit", edit_post_path(post)
-          |
-          = link_to "Destroy", post, method: :delete, data: { confirm: "Sure?" }
-          - unless post.published?
-            | (draft)
+  %h1 Published
+
+  - if @posts.published.present?
+    = render partial: "post_list", locals: { posts: @posts.published }
   - else
-    There are no posts yet
+    There are no published posts yet
+
+%div
+  %h1 Drafts
+
+  - if @posts.drafts.present?
+    = render partial: "post_list", locals: { posts: @posts.drafts }
+  - else
+    There are no drafts yet

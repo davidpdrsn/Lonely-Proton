@@ -25,6 +25,15 @@ describe Post do
     expect(post.html).to eq html
   end
 
+  describe ".drafts" do
+    it "returns the drafts" do
+      post = create :post, title: "published"
+      draft = create :post, published_at: nil, title: "draft"
+
+      expect(Post.drafts.map(&:title)).to eq ["draft"]
+    end
+  end
+
   describe ".recently_published_first" do
     it "returns the posts in the order they were published" do
       create :post, title: "new", published_at: Time.now
