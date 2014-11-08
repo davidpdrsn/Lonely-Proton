@@ -134,13 +134,12 @@ describe PostsController do
     end
 
     it "sets the published at if post becomes published" do
-      now = Time.now
-      allow(Time).to receive(:now).and_return(now)
-
-      http_login
-      post = create :post, published_at: nil
-      patch :update, id: post.id, draft: false, post: { title: post.title }
-      expect(Post.find(post.id).published_at).to eq now
+      Timecop.freeze(Time.now) do
+        http_login
+        post = create :post, published_at: false
+        patch :update, id: post.id, draft: false, post: { title: post.title }
+        expect(Post.find(post.id).published_at).to eq Time.now
+      end
     end
 
     it "requires authentication" do
