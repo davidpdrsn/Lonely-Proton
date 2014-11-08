@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_filter :require_authentication, only: [:create, :new, :edit,
+  before_action :require_authentication, only: [:create, :new, :edit,
                                                 :update, :destroy]
 
   def index
@@ -8,6 +8,10 @@ class PostsController < ApplicationController
 
   def show
     @post = decorator.decorate(Post.find(params[:id]))
+
+    if @post.draft?
+      require_authentication
+    end
   end
 
   def new

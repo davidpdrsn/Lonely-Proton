@@ -9,6 +9,27 @@ describe PostsController do
     end
   end
 
+  describe "#show" do
+    it "shows the post" do
+      post = create :post
+      get :show, id: post.id
+      expect(response.status).to eq 200
+    end
+
+    it "requires authentication if the post is a draft" do
+      draft = create :post, published_at: nil
+      get :show, id: draft.id
+      expect(response.status).to eq 401
+    end
+
+    it "lets authorized users see drafts" do
+      http_login
+      draft = create :post, published_at: nil
+      get :show, id: draft.id
+      expect(response.status).to eq 200
+    end
+  end
+
   describe "#create" do
     it "requires authentication" do
       post :create, post: { title: "title", markdown: "markdown" }
