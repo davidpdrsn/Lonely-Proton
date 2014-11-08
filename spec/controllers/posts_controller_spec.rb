@@ -27,7 +27,7 @@ describe PostsController do
 
     it "does not create the post if its invalid" do
       http_login
-      a_post = create_post(valid: false)
+      create_post(valid: false)
 
       post :create, post: attributes_for(:post)
 
@@ -44,7 +44,7 @@ describe PostsController do
 
       post :create, post: { tag_ids: [tag.id.to_s] }
 
-      expect(a_post).to have_received(:update).with({ tags: [tag] })
+      expect(a_post).to have_received(:update).with(tags: [tag])
     end
 
     it "delegates to Publisher for publishing the post or not" do

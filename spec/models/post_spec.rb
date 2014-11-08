@@ -27,8 +27,8 @@ describe Post do
 
   describe ".drafts" do
     it "returns the drafts" do
-      post = create :post, title: "published"
-      draft = create :post, published_at: nil, title: "draft"
+      create :post, title: "published"
+      create :post, published_at: nil, title: "draft"
 
       expect(Post.drafts.map(&:title)).to eq ["draft"]
     end
