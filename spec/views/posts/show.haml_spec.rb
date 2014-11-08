@@ -25,8 +25,8 @@ describe "posts/show.haml" do
   end
 
   it "shows if the post is a draft" do
-    post = stubbed_post(published_at: nil)
-    assign(:post, post)
+    draft = stubbed_post(published_at: nil)
+    assign(:post, draft)
 
     expect(page).to have_content "(draft)"
   end
