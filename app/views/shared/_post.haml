@@ -5,6 +5,9 @@
       = link_to post.title, post.link, class: 'external-link'
     - else
       = post.title
+    - if post.draft?
+      %em
+        %small (draft)
 
   - if post.tags.present?
     %div.tags
