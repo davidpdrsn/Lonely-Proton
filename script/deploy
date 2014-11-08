@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+
+rake && git push origin master && bin/cap deploy
