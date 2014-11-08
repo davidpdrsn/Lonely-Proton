@@ -17,57 +17,46 @@ describe PostsController do
 
     it "creates the post if its valid" do
       http_login
+      a_post = create_post(valid: true)
 
-      expect do
-        post :create, post: {
-          title: "title",
-          markdown: "markdown",
-          link: "http://google.com",
-        }
-      end.to change { Post.count }.by 1
+      post :create, post: attributes_for(:post)
 
-      expect(subject).to redirect_to Post.last
-      expect(Post.last.link).to eq "http://google.com"
-    end
-
-    it "creates the post with tags" do
-      http_login
-      tag = create :tag
-
-      post :create, post: {
-        title: "title",
-        markdown: "markdown",
-        tag_ids: [tag.id.to_s],
-      }
-
-      expect(Post.last.tags).to include tag
+      expect(subject).to set_the_flash[:notice]
+      expect(subject).to redirect_to(a_post)
     end
 
     it "does not create the post if its invalid" do
       http_login
+      a_post = create_post(valid: false)
 
-      expect do
-        post :create, post: { title: nil, markdown: "markdown" }
-      end.not_to change { Post.count }
+      post :create, post: attributes_for(:post)
 
       expect(subject).to set_the_flash[:alert]
       expect(subject).to render_template :new
     end
 
-    it "creates the post without a published_at if draft was set" do
+    it "creates the post with tags" do
       http_login
-      post :create, post: attributes_for(:post), draft: true
+      tag = build_stubbed(:tag)
+      allow(Tag).to receive(:find_for_ids).and_return([tag])
+      a_post = create_post(valid: true)
+      allow(a_post).to receive(:update)
 
-      expect(Post.last.published_at).to eq nil
+      post :create, post: { tag_ids: [tag.id.to_s] }
+
+      expect(a_post).to have_received(:update).with({ tags: [tag] })
     end
 
-    it "creates the post with a published at if draft was not set" do
-      Timecop.freeze(Time.now) do
-        http_login
-        post :create, post: attributes_for(:post), draft: false
+    it "delegates to Publisher for publishing the post or not" do
+      http_login
+      a_post = create_post(valid: true)
+      publisher = double("publisher")
+      allow(publisher).to receive(:publish)
+      allow(Publisher).to receive(:new).and_return(publisher)
 
-        expect(Post.last.published_at).to eq Time.now
-      end
+      post :create, post: attributes_for(:post), draft: true
+
+      expect(publisher).to have_received(:publish).with(is_draft: true)
     end
   end
 
@@ -160,5 +149,12 @@ describe PostsController do
       delete :destroy, id: 1
       expect(subject).to redirect_to admin_path
     end
+  end
+
+  def create_post(valid:)
+    a_post = build_stubbed(:post)
+    allow(Post).to receive(:new).and_return(a_post)
+    allow(a_post).to receive(:save).and_return(valid)
+    a_post
   end
 end

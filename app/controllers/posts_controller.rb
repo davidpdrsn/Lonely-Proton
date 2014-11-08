@@ -12,20 +12,16 @@ class PostsController < ApplicationController
 
   def new
     post = Post.new
-    @form = NewPostForm.new(post, tags)
+    @form = NewPostForm.new(post, all_tags)
   end
 
   def create
     @post = Post.new(post_params)
 
-    if params[:draft]
-      @post.published_at = nil
-    else
-      @post.published_at = Time.now
-    end
+    Publisher.new(@post).publish(is_draft: params[:draft])
 
-    tag_ids = params[:post].fetch(:tag_ids, [])
-    associate(records_with_ids: tag_ids, of_type: Tag, with_record: @post)
+    tags = Tag.find_for_ids(params[:post][:tag_ids])
+    @post.update(tags: tags)
 
     if @post.save
       flash.notice = "Post created"
@@ -38,20 +34,16 @@ class PostsController < ApplicationController
 
   def edit
     post = Post.find(params[:id])
-    @form = NewPostForm.new(post, tags)
+    @form = NewPostForm.new(post, all_tags)
   end
 
   def update
     @post = Post.find(params[:id])
 
-    if params[:draft]
-      @post.published_at = nil
-    else
-      @post.published_at = Time.now
-    end
+    Publisher.new(@post).publish(is_draft: params[:draft])
 
-    tag_ids = params[:post].fetch(:tag_ids, [])
-    associate(records_with_ids: tag_ids, of_type: Tag, with_record: @post)
+    tags = Tag.find_for_ids(params[:post][:tag_ids])
+    @post.update(tags: tags)
 
     if @post.update(post_params)
       flash.notice = "Post updated"
@@ -77,18 +69,7 @@ class PostsController < ApplicationController
     CompositeDecorator.new([PostWithPrettyDate])
   end
 
-  def tags
+  def all_tags
     DecoratedCollection.new(Tag.all, TagWithDomId)
-  end
-
-  def associate(records_with_ids:, of_type:, with_record:)
-    association_name = of_type.to_s.pluralize.downcase
-
-    with_record.public_send("#{association_name}=", [])
-
-    records_with_ids.each do |id|
-      associated_record = of_type.find_or_create_by(id: id.to_i)
-      with_record.public_send(association_name) << associated_record
-    end
   end
 end

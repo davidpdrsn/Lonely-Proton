@@ -28,4 +28,23 @@ describe Tag do
       expect(tag.posts).to_not include post
     end
   end
+
+  describe ".find_for_ids" do
+    it "returns the tags with the ids" do
+      tag = create :tag, name: "expected"
+      create :tag, name: "not expected"
+
+      found_tags = Tag.find_for_ids([tag.id])
+      expect(found_tags.map(&:name)).to eq ["expected"]
+    end
+
+    it "doesn't care if the ids are strings or ints" do
+      tag = create :tag, name: "expected"
+      create :tag, name: "not expected"
+
+      ids_as_strings = [tag.id].map(&:to_s)
+      found_tags = Tag.find_for_ids(ids_as_strings)
+      expect(found_tags.map(&:name)).to eq ["expected"]
+    end
+  end
 end
