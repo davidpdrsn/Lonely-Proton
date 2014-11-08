@@ -138,8 +138,15 @@ describe PostsController do
         http_login
         post = create :post, published_at: false
         patch :update, id: post.id, draft: false, post: { title: post.title }
-        expect(Post.find(post.id).published_at).to eq Time.now
+
+        time = Post.find(post.id).published_at
+        expect_time(time, to_be_within_range_of: Time.now)
       end
+    end
+
+    def expect_time(time, to_be_within_range_of:)
+      now = Time.now
+      expect((now-10.minutes..now+10.minutes)).to cover time
     end
 
     it "requires authentication" do
