@@ -4,9 +4,7 @@ class Tag < ActiveRecord::Base
   validates :name, presence: true
   validates :name, uniqueness: true
 
-  def self.find_for_ids(ids)
-    where(id: ids)
-  end
+  scope :find_for_ids, -> (ids) { where(id: ids) }
 
   def to_param
     [id, name.parameterize].join("-")
