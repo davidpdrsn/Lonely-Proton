@@ -1,10 +1,8 @@
 class CompositeDecorator
-  def initialize(decorators)
-    @decorators = decorators
-  end
+  pattr_initialize :decorators
 
   def decorate(obj)
-    @decorators.inject(obj) do |acc, decorator|
+    decorators.inject(obj) do |acc, decorator|
       decorator.new(acc)
     end
   end

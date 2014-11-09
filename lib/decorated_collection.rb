@@ -1,10 +1,7 @@
 class DecoratedCollection
   include Enumerable
 
-  def initialize(objects, decorator)
-    @objects = objects
-    @decorator = decorator
-  end
+  pattr_initialize :objects, :decorator
 
   delegate :present?, to: :objects
 

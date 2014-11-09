@@ -1,21 +1,9 @@
 class CompositeObserver
-  def initialize(observers)
-    @observers = observers
-  end
+  pattr_initialize :observers
 
-  def saved(record)
-    notify_observers(:saved, record)
-  end
-
-  def updated(record)
-    notify_observers(:updated, record)
-  end
-
-  private
-
-  def notify_observers(event, record)
-    @observers.each do |observer|
-      observer.public_send(event, record)
+  def method_missing(name, *args, &block)
+    observers.each do |observer|
+      observer.public_send(name, *args, &block)
     end
   end
 end
