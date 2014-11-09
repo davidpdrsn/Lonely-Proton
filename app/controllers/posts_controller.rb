@@ -7,7 +7,7 @@ class PostsController < ApplicationController
   end
 
   def show
-    @post = decorator.decorate(Post.find(params[:id]))
+    @post = decorator.new(Post.find(params[:id]))
 
     if @post.draft?
       require_authentication
@@ -65,7 +65,7 @@ class PostsController < ApplicationController
   end
 
   def decorator
-    CompositeDecorator.new([PostWithPrettyDate])
+    PostWithPrettyDate
   end
 
   def all_tags
