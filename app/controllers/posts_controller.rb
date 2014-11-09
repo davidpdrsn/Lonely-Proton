@@ -23,13 +23,7 @@ class PostsController < ApplicationController
     new_post = Post.new(post_params)
     new_post.slug = BuildsUniqueSlug.new(Post.all, new_post).unique_slug
 
-    observer = CompositeObserver.new([
-      PublishObserver.new(is_draft: params[:draft]),
-      ParseMarkdownObserver.new(MarkdownParser.new),
-      TaggingObserver.new(Tag.find_for_ids(params[:post][:tag_ids]))
-    ])
-
-    @post = ObservableRecord.new(new_post, observer)
+    @post = ObservableRecord.new(new_post, post_observer)
 
     if @post.save
       flash.notice = "Post created"
@@ -48,13 +42,7 @@ class PostsController < ApplicationController
   def update
     post_to_edit = Post.find(params[:id])
 
-    observer = CompositeObserver.new([
-      PublishObserver.new(is_draft: params[:draft]),
-      ParseMarkdownObserver.new(MarkdownParser.new),
-      TaggingObserver.new(Tag.find_for_ids(params[:post][:tag_ids]))
-    ])
-
-    @post = ObservableRecord.new(post_to_edit, observer)
+    @post = ObservableRecord.new(post_to_edit, post_observer)
 
     if @post.update(post_params)
       flash.notice = "Post updated"
@@ -82,5 +70,13 @@ class PostsController < ApplicationController
 
   def all_tags
     DecoratedCollection.new(Tag.all, TagWithDomId)
+  end
+
+  def post_observer
+    CompositeObserver.new([
+      PublishObserver.new(is_draft: params[:draft]),
+      ParseMarkdownObserver.new(MarkdownParser.new),
+      TaggingObserver.new(Tag.find_for_ids(params[:post][:tag_ids]))
+    ])
   end
 end
