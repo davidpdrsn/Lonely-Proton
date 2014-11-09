@@ -26,12 +26,10 @@ class PostsController < ApplicationController
     observer = CompositeObserver.new([
       PublishObserver.new(is_draft: params[:draft]),
       ParseMarkdownObserver.new(MarkdownParser.new),
+      TaggingObserver.new(Tag.find_for_ids(params[:post][:tag_ids]))
     ])
 
     @post = ObservableRecord.new(new_post, observer)
-
-    tags = Tag.find_for_ids(params[:post][:tag_ids])
-    @post.update(tags: tags)
 
     if @post.save
       flash.notice = "Post created"
@@ -53,12 +51,10 @@ class PostsController < ApplicationController
     observer = CompositeObserver.new([
       PublishObserver.new(is_draft: params[:draft]),
       ParseMarkdownObserver.new(MarkdownParser.new),
+      TaggingObserver.new(Tag.find_for_ids(params[:post][:tag_ids]))
     ])
 
     @post = ObservableRecord.new(post_to_edit, observer)
-
-    tags = Tag.find_for_ids(params[:post][:tag_ids])
-    @post.update(tags: tags)
 
     if @post.update(post_params)
       flash.notice = "Post updated"

@@ -55,18 +55,6 @@ describe PostsController do
       expect(subject).to set_the_flash[:alert]
       expect(subject).to render_template :new
     end
-
-    it "creates the post with tags" do
-      http_login
-      tag = build_stubbed(:tag)
-      allow(Tag).to receive(:find_for_ids).and_return([tag])
-      a_post = create_post(valid: true)
-      allow(a_post).to receive(:update)
-
-      post :create, post: { tag_ids: [tag.id.to_s] }
-
-      expect(a_post).to have_received(:update).with(tags: [tag])
-    end
   end
 
   describe "#new" do
