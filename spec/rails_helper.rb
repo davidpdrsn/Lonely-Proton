@@ -3,13 +3,13 @@ if ENV["CODECLIMATE_REPO_TOKEN"]
   CodeClimate::TestReporter.start
 end
 
-ENV["RAILS_ENV"] ||= 'test'
-require 'spec_helper'
+ENV["RAILS_ENV"] ||= "test"
+require "spec_helper"
 require File.expand_path("../../config/environment", __FILE__)
-require 'rspec/rails'
-require 'capybara/rails'
-require 'shoulda/matchers'
-require 'database_cleaner'
+require "rspec/rails"
+require "capybara/rails"
+require "shoulda/matchers"
+require "database_cleaner"
 
 Capybara.javascript_driver = :webkit
 
