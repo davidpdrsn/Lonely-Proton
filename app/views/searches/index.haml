@@ -14,6 +14,8 @@
 
       = highlight(post.html.html_safe, @results.query)
 
+      %div= link_to "Go to post", post
+
       %time{ pubdate: true }
         = post.pretty_date
 - else
