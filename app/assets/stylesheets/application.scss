@@ -46,7 +46,7 @@ h1.logo {
 nav.main-nav {
   @include clearfix;
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   a {
     text-transform: lowercase;
     border-bottom: 0;
@@ -66,6 +66,28 @@ nav.main-nav {
     }
   }
 } // nav.main-nav
+
+.search-form {
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: center;
+
+  [type=search] {
+    width: 75%;
+    max-width: 12rem;
+    border-radius: 100px;
+    border: 1px solid rgba($gray, .4);
+    outline: none;
+    padding: 4px 8px;
+    font-size: 12px;
+  }
+
+  [type=submit] {
+    position: absolute;
+    left: -9999px;
+    top: -9999px;
+  }
+}
 
 article.post {
   margin-bottom: 2rem;

@@ -1,0 +1,12 @@
+%h1
+  = link_to "☉", post, title: "Permalink", class: "permalink"
+  - if post.link?
+    = link_to post.title, post.link, class: 'external-link'
+  - else
+    - if local_assigns[:query_to_highlight]
+      = highlight(post.title, query_to_highlight)
+    - else
+      = post.title
+  - if post.draft?
+    %em
+      %small (draft)

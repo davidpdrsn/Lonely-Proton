@@ -1,0 +1,20 @@
+%h1= "Results for \"#{@results.query}\"".html_safe
+
+- if @results.has_posts?
+  - @results.posts.each do |post|
+    %article.post
+      %h1
+        = render partial: "shared/post_permalink", locals: { |
+            post: post,                                      |
+            query_to_highlight: @results.query               |
+          }                                                  |
+
+      - if post.tags.present?
+        = render partial: "shared/tag_list", locals: { tags: post.tags }
+
+      = highlight(post.html.html_safe, @results.query)
+
+      %time{ pubdate: true }
+        = post.pretty_date
+- else
+  No results

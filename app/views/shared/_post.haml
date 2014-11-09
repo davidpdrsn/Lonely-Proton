@@ -1,20 +1,9 @@
 %article.post
   %h1
-    = link_to "☉", post, title: "Permalink", class: "permalink"
-    - if post.link?
-      = link_to post.title, post.link, class: 'external-link'
-    - else
-      = post.title
-    - if post.draft?
-      %em
-        %small (draft)
+    = render partial: "shared/post_permalink", locals: { post: post }
 
   - if post.tags.present?
-    %div.tags
-      %ul
-        - post.tags.each do |tag|
-          %li
-            = link_to tag.name, tag
+    = render partial: "shared/tag_list", locals: { tags: post.tags }
 
   = post.html.html_safe
 

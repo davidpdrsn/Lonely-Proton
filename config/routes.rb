@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     resources :tags, only: [:create]
   end
 
+  get "/search", to: "searches#index", as: :search
   get "/admin", to: "admin#index", as: :admin
 
   root to: "posts#index"

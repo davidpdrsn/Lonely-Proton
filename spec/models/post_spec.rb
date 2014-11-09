@@ -63,6 +63,59 @@ describe Post do
     end
   end
 
+  describe ".where_content_or_title_matches" do
+    it "returns posts with matching title" do
+      post = create :post, title: "javascript"
+      results = Post.where_content_or_title_matches("javascript")
+
+      expect(results).to eq [post]
+    end
+
+    it "returns posts with matching body" do
+      post = create :post, title: "javascript", markdown: "html"
+      results = Post.where_content_or_title_matches("html")
+
+      expect(results).to eq [post]
+    end
+
+    it "searches for substrings as well" do
+      post = create :post, title: "javascript"
+      results = Post.where_content_or_title_matches("java")
+
+      expect(results).to eq [post]
+    end
+
+    it "returns an empty array when there are no posts" do
+      create :post, title: "javascript"
+      results = Post.where_content_or_title_matches("no matches")
+
+      expect(results).to eq []
+    end
+
+    it "is case insensitive" do
+      post = create :post, title: "jAVAScript"
+      results = Post.where_content_or_title_matches("javascRIPt")
+
+      expect(results).to eq [post]
+    end
+
+    it "does not include drafts" do
+      draft = create :post, title: "javascript", published_at: nil
+      results = Post.where_content_or_title_matches("javascript")
+
+      expect(results).to eq []
+    end
+
+    it "returns the results sorted by when they were published" do
+      create :post, title: "post 1", published_at: Time.now
+      create :post, title: "post 3", published_at: 20.minutes.ago
+      create :post, title: "post 2", published_at: 10.minutes.ago
+      results = Post.where_content_or_title_matches("post")
+
+      expect(results.map(&:title)).to eq ["post 1", "post 2", "post 3"]
+    end
+  end
+
   describe "#published?" do
     it "returns true if the post is published" do
       post = build_stubbed :post, published_at: Time.now

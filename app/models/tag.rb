@@ -13,6 +13,7 @@ class Tag < ActiveRecord::Base
   end
 
   def ==(another_tag)
+    # TODO: Remove DIP violation
     if another_tag.is_a? TagWithDomId
       another_tag == self
     else
