@@ -1,5 +1,6 @@
 require "delegate"
 
+# Decorator that truncates the markdown of a post and reparses the HTML
 class TruncatedPost < SimpleDelegator
   def initialize(post, length:, markdown_parser:, truncate_method:)
     super(post)

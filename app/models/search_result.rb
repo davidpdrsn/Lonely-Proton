@@ -1,3 +1,4 @@
+# Class that encapsulates a search query and the matching posts
 class SearchResult
   def initialize(posts, query)
     @posts = posts

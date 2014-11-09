@@ -1,3 +1,4 @@
+# Class for parsing markdown into HTML
 class MarkdownParser
   OPTIONS = {
     fenced_code_blocks: true,

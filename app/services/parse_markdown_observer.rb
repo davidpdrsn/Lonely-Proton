@@ -1,7 +1,6 @@
+# Observer that will parser a posts markdown when its saved or updated
 class ParseMarkdownObserver
-  def initialize(parser)
-    @parser = parser
-  end
+  pattr_initialize :parser
 
   def saved(record)
     record.html = @parser.parse(record.markdown)

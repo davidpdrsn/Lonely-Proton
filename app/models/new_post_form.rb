@@ -1,3 +1,4 @@
+# Facade for a post used in form, and a collection of tags
 class NewPostForm
   def initialize(post, tags)
     @post = post

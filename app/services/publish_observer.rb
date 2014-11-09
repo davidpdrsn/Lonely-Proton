@@ -1,3 +1,4 @@
+# Observer that will publish a post if required when saving or updating
 class PublishObserver
   def initialize(is_draft:)
     @is_draft = is_draft

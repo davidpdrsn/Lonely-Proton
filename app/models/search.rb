@@ -1,3 +1,4 @@
+# Class that searches for records
 class Search
   def for(query_param)
     # TODO: Remove DIP violation

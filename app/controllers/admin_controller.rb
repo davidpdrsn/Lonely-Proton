@@ -1,3 +1,4 @@
+# Controller responsible for showing the admin dashboard
 class AdminController < ApplicationController
   before_filter :require_authentication
 

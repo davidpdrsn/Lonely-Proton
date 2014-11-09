@@ -1,13 +1,17 @@
+# Controller responsible for crud actions related to posts
 class PostsController < ApplicationController
   before_action :require_authentication, only: [:create, :new, :edit,
                                                 :update, :destroy]
 
   def index
-    @posts = DecoratedCollection.new(Post.recently_published_first, decorator)
+    @posts = DecoratedCollection.new(
+      Post.recently_published_first,
+      PostWithPrettyDate
+    )
   end
 
   def show
-    @post = decorator.new(Post.find(params[:id]))
+    @post = PostWithPrettyDate.new(Post.find(params[:id]))
 
     if @post.draft?
       require_authentication
@@ -15,15 +19,14 @@ class PostsController < ApplicationController
   end
 
   def new
-    post = Post.new
-    @form = NewPostForm.new(post, all_tags)
+    @form = new_post_form(Post.new)
   end
 
   def create
     new_post = Post.new(post_params)
     new_post.slug = BuildsUniqueSlug.new(Post.all, new_post).unique_slug
 
-    @post = ObservableRecord.new(new_post, post_observer)
+    @post = make_post_observable(new_post)
 
     if @post.save
       flash.notice = "Post created"
@@ -35,14 +38,11 @@ class PostsController < ApplicationController
   end
 
   def edit
-    post = Post.find(params[:id])
-    @form = NewPostForm.new(post, all_tags)
+    @form = new_post_form(Post.find(params[:id]))
   end
 
   def update
-    post_to_edit = Post.find(params[:id])
-
-    @post = ObservableRecord.new(post_to_edit, post_observer)
+    @post = make_post_observable(Post.find(params[:id]))
 
     if @post.update(post_params)
       flash.notice = "Post updated"
@@ -60,23 +60,25 @@ class PostsController < ApplicationController
 
   private
 
+  def make_post_observable(post)
+    ObservableRecord.new(
+      post,
+      CompositeObserver.new([
+        PublishObserver.new(is_draft: params[:draft]),
+        ParseMarkdownObserver.new(MarkdownParser.new),
+        TaggingObserver.new(Tag.find_for_ids(params[:post][:tag_ids]))
+      ]),
+    )
+  end
+
   def post_params
     params.require(:post).permit :title, :markdown, :link
   end
 
-  def decorator
-    PostWithPrettyDate
-  end
-
-  def all_tags
-    DecoratedCollection.new(Tag.all, TagWithDomId)
-  end
-
-  def post_observer
-    CompositeObserver.new([
-      PublishObserver.new(is_draft: params[:draft]),
-      ParseMarkdownObserver.new(MarkdownParser.new),
-      TaggingObserver.new(Tag.find_for_ids(params[:post][:tag_ids]))
-    ])
+  def new_post_form(post)
+    NewPostForm.new(
+      post,
+      DecoratedCollection.new(Tag.all, TagWithDomId)
+    )
   end
 end

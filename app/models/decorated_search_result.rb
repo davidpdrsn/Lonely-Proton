@@ -1,5 +1,6 @@
 require "delegate"
 
+# Class for decorating a search result with a decorator
 class DecoratedSearchResult < SimpleDelegator
   def initialize(results, decorator, decorated_collection_factory:)
     super(results)

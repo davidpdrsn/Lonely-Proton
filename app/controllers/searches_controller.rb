@@ -1,3 +1,4 @@
+# Controller responsible for searching
 class SearchesController < ApplicationController
   def index
     decorator = CompositeDecorator.new([

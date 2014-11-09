@@ -2,6 +2,7 @@ source "https://rubygems.org"
 
 ruby "2.1.3"
 
+gem "annotate"
 gem "attr_extras"
 gem "autoprefixer-rails"
 gem "coderay"

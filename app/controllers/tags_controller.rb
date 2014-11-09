@@ -1,3 +1,5 @@
+# Controller responsible for crud actions related to tags
+# It also lets you create tags over HTTP
 class TagsController < ApplicationController
   before_filter :require_authentication, only: [:create]
 

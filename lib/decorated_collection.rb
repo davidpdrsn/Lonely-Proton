@@ -1,3 +1,4 @@
+# Class for applying a decorator to a collection
 class DecoratedCollection
   include Enumerable
 

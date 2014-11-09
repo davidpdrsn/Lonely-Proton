@@ -1,8 +1,6 @@
+# Class that builds a unique slug for a post
 class BuildsUniqueSlug
-  def initialize(posts, post)
-    @posts = posts
-    @post = post
-  end
+  pattr_initialize :posts, :post
 
   def unique_slug
     if slug_has_been_taken
