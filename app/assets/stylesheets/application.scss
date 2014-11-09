@@ -402,12 +402,14 @@ code {
   line-height: 1.2;
 }
 
+li code,
 p code,
 pre {
   border-radius: 5px;
   padding: .5rem;
 }
 
+li code,
 p code {
   padding: .2rem;
 }
