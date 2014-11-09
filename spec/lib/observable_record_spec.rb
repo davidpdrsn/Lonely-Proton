@@ -24,7 +24,7 @@ describe ObservableRecord do
   end
 
   it "notifies an observer if update was successful" do
-    record = double("post", update: true, persisted?: true)
+    record = double("post", update: true, persisted?: true, save: true)
     observer = double("observer")
     allow(observer).to receive(:updated).with(record)
 
@@ -35,7 +35,7 @@ describe ObservableRecord do
   end
 
   it "doesn't notify the observer if update was not successful" do
-    record = double("post", update: false, persisted?: true)
+    record = double("post", update: false, persisted?: true, save: false)
     observer = double("observer")
     allow(observer).to receive(:updated).with(record)
 

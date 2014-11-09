@@ -14,6 +14,5 @@ describe ParseMarkdownObserver do
     observer.updated(post)
 
     expect(post).to have_received(:html=).with(html).twice
-    expect(post).to have_received(:save).twice
   end
 end

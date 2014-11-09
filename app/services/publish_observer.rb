@@ -19,6 +19,5 @@ class PublishObserver
 
   def publish_post(post)
     post.published_at = Time.now
-    post.save
   end
 end

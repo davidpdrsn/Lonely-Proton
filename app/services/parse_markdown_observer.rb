@@ -5,7 +5,6 @@ class ParseMarkdownObserver
 
   def saved(record)
     record.html = @parser.parse(record.markdown)
-    record.save
   end
 
   alias_method :updated, :saved

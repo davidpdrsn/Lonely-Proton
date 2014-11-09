@@ -10,7 +10,6 @@ describe PublishObserver do
       observer.saved(post)
 
       expect(post).to have_received(:published_at=).with(Time.now)
-      expect(post).to have_received(:save)
     end
   end
 
@@ -22,7 +21,6 @@ describe PublishObserver do
     observer.saved(post)
 
     expect(post).not_to have_received(:published_at=)
-    expect(post).not_to have_received(:save)
   end
 
   it "doesn't republish the post" do
@@ -33,12 +31,10 @@ describe PublishObserver do
     observer.saved(post)
 
     expect(post).not_to have_received(:published_at=)
-    expect(post).not_to have_received(:save)
   end
 
   def stubbed_post(options = {})
     post = double("post", options)
-    allow(post).to receive(:save)
     post
   end
 end

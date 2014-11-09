@@ -34,5 +34,8 @@ class ObservableRecord < SimpleDelegator
     else
       observer.saved(record)
     end
+
+    # TODO: Test that this methods gets called
+    record.save
   end
 end
