@@ -1,7 +1,7 @@
-require 'rails_helper'
+require "rails_helper"
 
 describe DecoratedCollection do
-  it 'decorates a collection with a decorator' do
+  it "decorates a collection with a decorator" do
     objects = DecoratedCollection.new([double, double], DecoratorA)
 
     objects.each do |object|
@@ -9,12 +9,13 @@ describe DecoratedCollection do
     end
   end
 
-  it 'delegates present? to the collection' do
-    collection = double('collection')
-    allow(collection).to receive(:present?).and_return(:foo)
+  it "delegates present? to the collection" do
+    collection = double("collection")
+    probe = double
+    allow(collection).to receive(:present?).and_return(probe)
     objects = DecoratedCollection.new(collection, double)
 
-    expect(objects.present?).to eq :foo
+    expect(objects.present?).to eq probe
   end
 end
 
