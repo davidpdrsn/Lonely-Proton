@@ -4,7 +4,7 @@ describe CurriedDecorator do
   it "curries the creation of a decorator with dependencies" do
     dependency = double("dependency")
     obj = double("obj")
-    decorator = CurriedDecorator.new(A, dependency: dependency)
+    decorator = CurriedDecorator.new(ADecorator, dependency: dependency)
 
     decorated = decorator.new(obj)
 
@@ -13,7 +13,7 @@ describe CurriedDecorator do
   end
 end
 
-class A
+class ADecorator
   def initialize(obj, dependency:)
     @obj = obj
     @dependency = dependency
