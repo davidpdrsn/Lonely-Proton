@@ -12,14 +12,6 @@ feature "viewing posts" do
     expect(page).to have_content "its all good"
   end
 
-  scenario "sees the parsed markdown as html" do
-    create_post_and_visit_root(markdown: "**hi**")
-
-    within "article.post strong" do
-      expect(page).to have_content "hi"
-    end
-  end
-
   scenario "sees the date the post was created" do
     create_post_and_visit_root created_at: Time.parse("2001-12-12 20")
 

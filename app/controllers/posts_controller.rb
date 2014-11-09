@@ -20,9 +20,15 @@ class PostsController < ApplicationController
   end
 
   def create
-    @post = Post.new(post_params)
+    new_post = Post.new(post_params)
+    new_post.slug = BuildsUniqueSlug.new(Post.all, new_post).unique_slug
 
-    Publisher.new.publish(@post, is_draft: params[:draft])
+    observer = CompositeObserver.new([
+      PublishObserver.new(is_draft: params[:draft]),
+      ParseMarkdownObserver.new(MarkdownParser.new),
+    ])
+
+    @post = ObservableRecord.new(new_post, observer)
 
     tags = Tag.find_for_ids(params[:post][:tag_ids])
     @post.update(tags: tags)
@@ -42,9 +48,14 @@ class PostsController < ApplicationController
   end
 
   def update
-    @post = Post.find(params[:id])
+    post_to_edit = Post.find(params[:id])
 
-    Publisher.new.publish(@post, is_draft: params[:draft])
+    observer = CompositeObserver.new([
+      PublishObserver.new(is_draft: params[:draft]),
+      ParseMarkdownObserver.new(MarkdownParser.new),
+    ])
+
+    @post = ObservableRecord.new(post_to_edit, observer)
 
     tags = Tag.find_for_ids(params[:post][:tag_ids])
     @post.update(tags: tags)

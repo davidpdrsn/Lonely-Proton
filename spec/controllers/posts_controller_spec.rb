@@ -67,18 +67,6 @@ describe PostsController do
 
       expect(a_post).to have_received(:update).with(tags: [tag])
     end
-
-    it "delegates to Publisher for publishing the post or not" do
-      http_login
-      a_post = create_post(valid: true)
-      publisher = double("publisher")
-      allow(publisher).to receive(:publish)
-      allow(Publisher).to receive(:new).and_return(publisher)
-
-      post :create, post: attributes_for(:post), draft: true
-
-      expect(publisher).to have_received(:publish).with(a_post, is_draft: true)
-    end
   end
 
   describe "#new" do
@@ -124,29 +112,6 @@ describe PostsController do
       expect(Post.find(post.id).title).to eq "Old title"
       expect(subject).to render_template :edit
       expect(subject).to set_the_flash[:alert]
-    end
-
-    it "removes the published at if post is becomes a draft" do
-      http_login
-      post = create :post
-      patch :update, id: post.id, draft: true, post: { title: post.title }
-      expect(Post.find(post.id).published_at).to eq nil
-    end
-
-    it "sets the published at if post becomes published" do
-      Timecop.freeze(Time.now) do
-        http_login
-        post = create :post, published_at: false
-        patch :update, id: post.id, draft: false, post: { title: post.title }
-
-        time = Post.find(post.id).published_at
-        expect_time(time, to_be_within_range_of: Time.now)
-      end
-    end
-
-    def expect_time(time, to_be_within_range_of:)
-      now = Time.now
-      expect((now-10.minutes..now+10.minutes)).to cover time
     end
 
     it "requires authentication" do

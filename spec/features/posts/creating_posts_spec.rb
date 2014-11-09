@@ -1,9 +1,9 @@
-require 'rails_helper'
+require "rails_helper"
 
-feature 'creating posts' do
-  scenario 'user creates a post' do
+feature "creating posts" do
+  scenario "user creates a post" do
     title = "A post"
-    create_post(title: title)
+    create_post(title: title, markdown: "**hi**")
 
     expect(page).to have_content title
     within "article.post strong" do
@@ -11,7 +11,7 @@ feature 'creating posts' do
     end
   end
 
-  scenario 'creates a post with an existing tag' do
+  scenario "creates a post with an existing tag" do
     create :tag, name: "JavaScript"
 
     title = "A post"
@@ -24,7 +24,7 @@ feature 'creating posts' do
     expect(page).to have_content "JavaScript"
   end
 
-  scenario 'creating a draft and only seeing it in the admin backend' do
+  scenario "creating a draft and only seeing it in the admin backend" do
     title = "A post"
 
     create_post_but_before_save(title: title) do

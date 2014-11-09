@@ -1,11 +1,8 @@
 class Post < ActiveRecord::Base
   has_and_belongs_to_many :tags
 
-  validates :markdown, presence: true
-  validates :title, presence: true
-  validates :title, uniqueness: true
-
-  before_save :parse_and_save_markdown
+  validates :title, :markdown, :slug, presence: true
+  validates :title, :slug, uniqueness: true
 
   scope :recently_created_first, -> { order("created_at desc") }
   scope :drafts, -> { where(published_at: nil) }
@@ -20,7 +17,7 @@ class Post < ActiveRecord::Base
   }
 
   def to_param
-    [id, title.parameterize].join("-")
+    [id, slug.parameterize].join("-")
   end
 
   def published?
@@ -29,12 +26,5 @@ class Post < ActiveRecord::Base
 
   def draft?
     !(published? || new_record?)
-  end
-
-  private
-
-  def parse_and_save_markdown
-    # TODO: Remove DIP violation
-    self.html = MarkdownParser.new.parse(markdown)
   end
 end

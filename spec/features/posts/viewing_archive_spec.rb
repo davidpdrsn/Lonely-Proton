@@ -1,7 +1,7 @@
-require 'rails_helper'
+require "rails_helper"
 
-feature 'viewing archive' do
-  scenario 'sees the titles of all the posts but not the content' do
+feature "viewing archive" do
+  scenario "sees the titles of all the posts but not the content" do
     post = create :post, title: "first post", markdown: "foo"
     another_post = create :post, title: "second post", markdown: "bar"
 
