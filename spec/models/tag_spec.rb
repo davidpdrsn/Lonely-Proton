@@ -41,7 +41,7 @@ describe Tag do
       create :post, title: "last", published_at: 30.minutes.ago, tags: [tag]
       create :post, title: "middle", published_at: 20.minutes.ago, tags: [tag]
 
-      expect(tag.posts.map(&:title)).to eq %w(first middle last)
+      expect(tag.posts.map(&:title)).to eq ["first", "middle", "last"]
     end
   end
 

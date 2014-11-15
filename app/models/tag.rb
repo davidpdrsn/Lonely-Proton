@@ -6,7 +6,6 @@
 #  name :string(255)
 #
 
-# Tag model
 class Tag < ActiveRecord::Base
   has_and_belongs_to_many :posts, lambda {
     where.not(published_at: nil)
