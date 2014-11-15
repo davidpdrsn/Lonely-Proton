@@ -5,7 +5,7 @@ set :application, "lonely_proton"
 set :repo_url, "git@github.com:davidpdrsn/Lonely-Proton.git"
 set :deploy_to, "/home/deployer/apps/#{fetch :application}"
 set :pty, true
-set :linked_files, ["config/database.yml" "config/application.yml"]
+set :linked_files, ["config/database.yml", "config/application.yml"]
 set :linked_dirs, ["bin", "log", "tmp/pids", "tmp/cache",
                    "tmp/sockets", "vendor/bundle", "public/system"]
 set :rbenv_type, :user
