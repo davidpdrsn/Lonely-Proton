@@ -4,7 +4,7 @@
 # is considered to be the first unless any hosts have the primary
 # property set.  Don't declare `role :all`, it's a meta role.
 
-role :app, %w{deployer@178.62.163.33}
+server "deployer@178.62.163.33", user: "deployer", roles: %w(app web db)
 
 # Custom SSH Options
 # ==================
@@ -13,9 +13,7 @@ role :app, %w{deployer@178.62.163.33}
 #
 # Global options
 # --------------
-set :ssh_options, {
-  user: 'deployer'
-}
+set :ssh_options, user: "deployer"
 #
 # And/or per server (overrides global)
 # ------------------------------------

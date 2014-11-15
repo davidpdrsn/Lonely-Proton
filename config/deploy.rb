@@ -23,12 +23,6 @@ namespace :deploy do
     end
   end
 
-  task :migrate do
-    on roles(:app), in: :sequence, wait: 5 do
-      execute "cd #{current_path} && bundle exec rake RAILS_ENV=#{fetch :stage} db:migrate --trace"
-    end
-  end
-
   after :publishing, :restart
 
   after :restart, :clear_cache do
