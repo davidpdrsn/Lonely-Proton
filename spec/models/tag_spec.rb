@@ -23,7 +23,6 @@ describe Tag do
     it "is == to the same tag" do
       tag = create :tag
 
-      expect(tag == tag).to eq true
       expect(Tag.find(tag.id) == tag).to eq true
     end
   end

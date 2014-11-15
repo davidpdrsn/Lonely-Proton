@@ -6,6 +6,7 @@
 #  name :string(255)
 #
 
+# Tag model
 class Tag < ActiveRecord::Base
   has_and_belongs_to_many :posts, -> { where.not published_at: nil }
 
@@ -18,12 +19,12 @@ class Tag < ActiveRecord::Base
     [id, name.parameterize].join("-")
   end
 
-  def ==(another_tag)
+  def ==(other)
     # TODO: Remove DIP violation
-    if another_tag.is_a? TagWithDomId
-      another_tag == self
+    if other.is_a? TagWithDomId
+      other == self
     else
-      super(another_tag)
+      super(other)
     end
   end
 end
