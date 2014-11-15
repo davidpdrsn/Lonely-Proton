@@ -34,6 +34,15 @@ describe Tag do
 
       expect(tag.posts).to_not include post
     end
+
+    it "shows newest post first" do
+      tag = create :tag
+      create :post, title: "first", published_at: 10.minutes.ago, tags: [tag]
+      create :post, title: "last", published_at: 30.minutes.ago, tags: [tag]
+      create :post, title: "middle", published_at: 20.minutes.ago, tags: [tag]
+
+      expect(tag.posts.map(&:title)).to eq %w(first middle last)
+    end
   end
 
   describe ".find_for_ids" do
