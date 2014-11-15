@@ -36,4 +36,8 @@ RSpec.configure do |config|
       example.run
     end
   end
+
+  config.before(:each, js: true) do
+    page.driver.browser.url_blacklist = ["http://fonts.googleapis.com"]
+  end
 end
