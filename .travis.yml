@@ -1,5 +1,5 @@
 language: ruby
-rvm: ruby-2.1.3
+rvm: ruby-2.1.4
 script: xvfb-run bundle exec rspec
 before_script:
   - bin/setup
