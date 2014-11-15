@@ -18,7 +18,6 @@ namespace :deploy do
   desc "Restart application"
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
-      execute "cd #{current_path} && bundle exec rake RAILS_ENV=#{fetch :stage} assets:precompile --trace"
       execute "sudo /etc/init.d/apache2 restart"
     end
   end
