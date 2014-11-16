@@ -22,11 +22,11 @@ class Post < ActiveRecord::Base
   scope :recently_created_first, -> { order("created_at desc") }
   scope :drafts, -> { where(published_at: nil) }
 
-  scope :recently_published_first, -> {
+  scope :recently_published_first, lambda {
     where.not(published_at: nil).order("published_at desc")
   }
 
-  scope :where_content_or_title_matches, -> (query_param) {
+  scope :where_content_or_title_matches, lambda { |query_param|
     where("(title || markdown) ILIKE ?", "%#{query_param}%")
       .recently_published_first
   }

@@ -2,7 +2,7 @@ require "rails_helper"
 
 feature "editing posts" do
   scenario "user edits the post" do
-    post = create :post, title: "Old title"
+    create :post, title: "Old title"
     authenticate
     visit admin_path
     click_link "Edit"
@@ -18,7 +18,7 @@ feature "editing posts" do
   scenario "edits the tag of a post" do
     tag = create :tag, name: "JavaScript"
     new_tag = create :tag, name: "Ruby"
-    post = create :post, tags: [tag]
+    create :post, tags: [tag]
 
     authenticate
     visit admin_path

@@ -1,0 +1,21 @@
+inherit_from:
+  - /Users/davidpdrsn/.rubocop.yml
+
+AllCops:
+  Exclude:
+    - db/**/*.rb
+    - config/initializers/**/*.rb
+    - config/environments/**/*.rb
+    - config/environment.rb
+    - config/boot.rb
+    - config/application.rb
+    - bin/**/*
+    - Gemfile
+
+Style/TrivialAccessors:
+  Exclude:
+    - app/helpers/**/*.rb
+
+Metrics/AbcSize:
+  Exclude:
+    - spec/support/creating_posts.rb

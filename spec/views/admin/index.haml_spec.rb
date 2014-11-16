@@ -6,8 +6,8 @@ describe "admin/index.haml" do
     assign(:posts, posts)
     render
 
-    expect(rendered).to match /There are no drafts yet/
-    expect(rendered).to match /There are no published posts yet/
+    expect(rendered).to match(/There are no drafts yet/)
+    expect(rendered).to match(/There are no published posts yet/)
   end
 
   it "shows the published posts" do
@@ -16,9 +16,9 @@ describe "admin/index.haml" do
     assign(:posts, posts)
     render
 
-    expect(rendered).to match /There are no drafts yet/
-    expect(rendered).not_to match /There are no published posts yet/
-    expect(rendered).to match /#{published.title}/
+    expect(rendered).to match(/There are no drafts yet/)
+    expect(rendered).not_to match(/There are no published posts yet/)
+    expect(rendered).to include published.title
   end
 
   it "shows the draft posts" do
@@ -27,8 +27,8 @@ describe "admin/index.haml" do
     assign(:posts, posts)
     render
 
-    expect(rendered).not_to match /There are no drafts yet/
-    expect(rendered).to match /There are no published posts yet/
-    expect(rendered).to match /#{draft.title}/
+    expect(rendered).not_to match(/There are no drafts yet/)
+    expect(rendered).to match(/There are no published posts yet/)
+    expect(rendered).to include draft.title
   end
 end

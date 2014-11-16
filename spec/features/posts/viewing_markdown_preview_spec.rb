@@ -1,9 +1,7 @@
-require 'rails_helper'
+require "rails_helper"
 
-feature 'viewing markdown preview' do
-  scenario 'shows live markdown preview', js: true do
-    title = "A post"
-
+feature "viewing markdown preview" do
+  scenario "shows live markdown preview", js: true do
     authenticate
     visit admin_path
     click_link "Create new post"

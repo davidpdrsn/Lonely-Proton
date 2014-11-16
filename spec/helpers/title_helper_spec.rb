@@ -1,7 +1,7 @@
-require 'rails_helper'
+require "rails_helper"
 
 describe TitleHelper do
-  it 'assigns the @post instance variable' do
+  it "assigns the @post instance variable" do
     a = ABaseClass.new
     a.title("A title")
     expect(a.instance_variable_get("@title")).to eq "A title"

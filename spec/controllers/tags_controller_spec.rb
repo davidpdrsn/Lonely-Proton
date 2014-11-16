@@ -1,13 +1,13 @@
-require 'rails_helper'
+require "rails_helper"
 
 describe TagsController do
   describe "#create" do
-    it 'requires authentication' do
+    it "requires authentication" do
       post :create, tag: { name: "foo" }
       expect(response.status).to eq 401
     end
 
-    it 'creates the tag if its valid' do
+    it "creates the tag if its valid" do
       http_login
 
       expect do
@@ -17,7 +17,7 @@ describe TagsController do
       expect(response.status).to eq 201
     end
 
-    it 'does not create the tag if its invalid' do
+    it "does not create the tag if its invalid" do
       http_login
 
       expect do

@@ -1,6 +1,6 @@
 %h1= "Results for \"#{@results.query}\"".html_safe
 
-- if @results.has_posts?
+- if @results.posts?
   - @results.posts.each do |post|
     %article.post
       %h1

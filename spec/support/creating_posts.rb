@@ -3,10 +3,9 @@ def create_post(options = {})
   visit admin_path
   click_link "Create new post"
   fill_in "Title", with: options[:title] || attributes_for(:post)[:title]
-  fill_in "Markdown", with: options[:markdown] || attributes_for(:post)[:markdown]
-  if block_given?
-    yield
-  end
+  fill_in "Markdown", with: options[:markdown] ||
+    attributes_for(:post)[:markdown]
+  yield if block_given?
   click_button "Create post"
   visit root_path
 

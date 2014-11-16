@@ -120,7 +120,7 @@ describe PostsController do
       post = create :post
       expect do
         delete :destroy, id: post.id
-      end.to change { Post.count }.by -1
+      end.to change { Post.count }.by(-1)
 
       expect(subject).to redirect_to admin_path
     end

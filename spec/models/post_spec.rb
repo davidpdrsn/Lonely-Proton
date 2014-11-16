@@ -24,7 +24,7 @@ describe Post do
   it { should have_and_belong_to_many :tags }
 
   it "should validate uniqueness of title" do
-    post = create :post, title: "title"
+    create :post, title: "title"
     expect(build :post, title: "title").to_not be_valid
   end
 
@@ -103,7 +103,7 @@ describe Post do
     end
 
     it "does not include drafts" do
-      draft = create :post, title: "javascript", published_at: nil
+      create :post, title: "javascript", published_at: nil
       results = Post.where_content_or_title_matches("javascript")
 
       expect(results).to eq []

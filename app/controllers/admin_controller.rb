@@ -5,7 +5,7 @@ class AdminController < ApplicationController
   def index
     @posts = AdminDashboard.new(
       published: Post.recently_published_first,
-      drafts: Post.drafts
+      drafts: Post.drafts,
     )
   end
 end

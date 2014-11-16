@@ -7,7 +7,7 @@ class SearchResult
 
   attr_reader :posts, :query
 
-  def has_posts?
+  def posts?
     @posts.present?
   end
 end

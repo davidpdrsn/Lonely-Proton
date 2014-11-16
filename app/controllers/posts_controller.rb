@@ -6,16 +6,14 @@ class PostsController < ApplicationController
   def index
     @posts = DecoratedCollection.new(
       Post.recently_published_first,
-      PostWithPrettyDate
+      PostWithPrettyDate,
     )
   end
 
   def show
     @post = PostWithPrettyDate.new(Post.find(params[:id]))
 
-    if @post.draft?
-      require_authentication
-    end
+    require_authentication if @post.draft?
   end
 
   def new
@@ -66,7 +64,7 @@ class PostsController < ApplicationController
       CompositeObserver.new([
         PublishObserver.new(is_draft: params[:draft]),
         ParseMarkdownObserver.new(MarkdownParser.new),
-        TaggingObserver.new(Tag.find_for_ids(params[:post][:tag_ids]))
+        TaggingObserver.new(Tag.find_for_ids(params[:post][:tag_ids])),
       ]),
     )
   end
@@ -78,7 +76,7 @@ class PostsController < ApplicationController
   def new_post_form(post)
     NewPostForm.new(
       post,
-      DecoratedCollection.new(Tag.all, TagWithDomId)
+      DecoratedCollection.new(Tag.all, TagWithDomId),
     )
   end
 end

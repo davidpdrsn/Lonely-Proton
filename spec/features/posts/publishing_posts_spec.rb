@@ -10,6 +10,6 @@ feature "publishing posts" do
     click_button "Save post"
 
     visit root_path
-    expect(page.body).to match /#{"post_one"}.*#{"post_two"}/m
+    expect(page.body).to match(/#{"post_one"}.*#{"post_two"}/m)
   end
 end

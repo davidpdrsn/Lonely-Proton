@@ -4,9 +4,9 @@ describe Search do
   describe "#for" do
     it "delegates to Post and builds a SearchResult" do
       query = "JavaScript"
-      post = double('post')
+      post = double("post")
       posts = [post]
-      results = double('results')
+      results = double("results")
 
       allow(Post).to receive(:where_content_or_title_matches)
         .with(query)

@@ -5,9 +5,9 @@ class PublishObserver
   end
 
   def saved(post)
-    if post_should_be_published(post)
-      publish_post(post)
-    end
+    return unless post_should_be_published(post)
+
+    publish_post(post)
   end
 
   alias_method :updated, :saved

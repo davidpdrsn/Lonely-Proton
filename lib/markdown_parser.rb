@@ -32,4 +32,3 @@ class CodeRayify < Redcarpet::Render::HTML
     CodeRay.scan(code, language).div(css: :class)
   end
 end
-
