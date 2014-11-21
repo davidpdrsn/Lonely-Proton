@@ -2,7 +2,7 @@ require "rails_helper"
 
 describe ObservableRecord do
   it "notifies an observer if saving was successful" do
-    record = double("post", save: true, persisted?: false)
+    record = double("record", save: true, persisted?: false)
     observer = double("observer")
     allow(observer).to receive(:saved).with(record)
 
@@ -13,7 +13,7 @@ describe ObservableRecord do
   end
 
   it "doesn't notify the observer if saving was not successful" do
-    record = double("post", save: false, persisted?: false)
+    record = double("record", save: false, persisted?: false)
     observer = double("observer")
     allow(observer).to receive(:saved).with(record)
 
@@ -24,7 +24,7 @@ describe ObservableRecord do
   end
 
   it "notifies an observer if update was successful" do
-    record = double("post", update: true, persisted?: true, save: true)
+    record = double("record", update: true, persisted?: true, save: true)
     observer = double("observer")
     allow(observer).to receive(:updated).with(record)
 
@@ -32,10 +32,11 @@ describe ObservableRecord do
 
     expect(worked).to eq true
     expect(observer).to have_received(:updated).with(record)
+    expect(record).to have_received(:save)
   end
 
   it "doesn't notify the observer if update was not successful" do
-    record = double("post", update: false, persisted?: true, save: false)
+    record = double("record", update: false, persisted?: true, save: false)
     observer = double("observer")
     allow(observer).to receive(:updated).with(record)
 
