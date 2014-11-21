@@ -11,3 +11,10 @@ Setup
 1. Clone down the repo with `git clone https://github.com/davidpdrsn/Lonely-Proton`
 2. `cd Lonely-Proton`
 3. Run the setup script `bin/setup`
+
+Running stats
+-------------
+
+1. `$ sh script/stats.sh starting_ref ending_ref`
+   The ending_ref is not included in the range.
+2. This will output some stats into "stats.csv".
