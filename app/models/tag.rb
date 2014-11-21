@@ -22,7 +22,6 @@ class Tag < ActiveRecord::Base
   end
 
   def ==(other)
-    # TODO: Remove DIP violation
     if other.is_a? TagWithDomId
       other == self
     else
