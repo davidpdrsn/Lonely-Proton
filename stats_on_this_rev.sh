@@ -48,8 +48,19 @@ number_of_files() {
   ruby_files | wc -l
 }
 
+number_of_classes() {
+  find . -name "*.rb" |
+  ag "(app|lib)" |
+  grep -v spec |
+  while read file; do
+    cat $file
+  done |
+  ag "^ *(class|module)" --nocolor |
+  wc -l
+}
+
 main() {
-  echo `sources_lines_of_code`,`test_lines_of_code`,`test_production_code_ratio`,`total_lines_of_code`,`number_of_files`,`test_time` | sed 's/ *//g'
+  echo `sources_lines_of_code`,`test_lines_of_code`,`test_production_code_ratio`,`total_lines_of_code`,`number_of_files`,`test_time`,`number_of_classes` | sed 's/ *//g'
 }
 
 main
