@@ -13,7 +13,7 @@ feature "viewing posts" do
   end
 
   scenario "sees the date the post was created" do
-    create_post_and_visit_root created_at: Time.parse("2001-12-12 20")
+    create_post_and_visit_root published_at: Time.parse("2001-12-12 20")
 
     within "article.post" do
       expect(page).to have_content "12/12/2001"
