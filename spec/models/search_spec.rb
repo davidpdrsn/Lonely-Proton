@@ -13,7 +13,7 @@ describe Search do
         .and_return(posts)
       allow(SearchResult).to receive(:new).and_return(results)
 
-      actual_results = Search.new.for(query)
+      actual_results = Search.new.for(query, type: Post)
 
       expect(actual_results).to eq results
       expect(SearchResult).to have_received(:new).with(posts, query)

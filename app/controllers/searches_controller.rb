@@ -2,7 +2,7 @@
 class SearchesController < ApplicationController
   def index
     @results = DecoratedSearchResult.new(
-      Search.new.for(params[:query]),
+      Search.new.for(params[:query], type: Post),
       decorator,
       decorated_collection_factory: DecoratedCollection,
     )
