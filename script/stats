@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+set -e
+
+start=$1
+end=$2
+
+run() {
+  echo "Hash, TODO count, Source lines, Test lines, Spec count, Spec run time, Require time, Spec end-to-end"
+  full_command="echo $hash,$todo_count,$soc,$toc,$spec_count,$spec_runtime,$require_time,$spec_runtime"
+  run-command-on-git-revisions $start $end "$full_command"
+}
+
+# hash
+hash='`git log -1 --pretty=%h`'
+
+# number of todo markers
+todo_count='`grep -ri TODO --include="*.rb" . | wc -l`'
+
+# soc
+soc='`find app lib -name "*.rb" | xargs cat | wc -l`'
+
+# toc
+toc='`find spec -name "*.rb" | xargs cat | wc -l`'
+
+# spec count
+spring start > /dev/null
+spec_count='`bundle exec rspec | grep examples | cut -d " " -f 1`'
+
+# spec run time
+spec_runtime='`bundle exec rspec | grep Finished | cut -d " " -f 3`'
+
+# time it takes to boot rails, has to stop spring first in case its running
+spring stop > /dev/null
+require_time='`(time -p bundle exec rails runner "0") 2>&1 1> /dev/null | grep real | cut -d " " -f 2`'
+
+# spec end to end time
+spring stop > /dev/null
+spec_end_to_end='`(time -p bundle exec rspec) 2>&1 1> /dev/null | grep real | cut -d " " -f 2`'
+
+run
