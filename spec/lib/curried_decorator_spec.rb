@@ -1,4 +1,4 @@
-require "rails_helper"
+require_relative "../../lib/curried_decorator"
 
 describe CurriedDecorator do
   it "curries the creation of a decorator with dependencies" do

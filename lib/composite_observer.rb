@@ -1,3 +1,5 @@
+require "attr_extras"
+
 # Composite for combining multiple observers into one
 class CompositeObserver
   pattr_initialize :observers

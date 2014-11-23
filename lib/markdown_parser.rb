@@ -1,3 +1,7 @@
+require "redcarpet"
+require "active_support/all"
+require "coderay"
+
 # Class for parsing markdown into HTML
 class MarkdownParser
   OPTIONS = {

@@ -1,3 +1,5 @@
+require "attr_extras"
+
 # Composite for combining multiple decorators into one
 class CompositeDecorator
   pattr_initialize :decorators

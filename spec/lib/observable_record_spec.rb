@@ -1,4 +1,4 @@
-require "rails_helper"
+require_relative "../../lib/observable_record"
 
 describe ObservableRecord do
   it "notifies an observer if saving was successful" do

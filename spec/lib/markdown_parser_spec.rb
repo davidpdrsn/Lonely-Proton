@@ -1,4 +1,4 @@
-require "rails_helper"
+require_relative "../../lib/markdown_parser"
 
 describe MarkdownParser do
   it "parses markdown" do

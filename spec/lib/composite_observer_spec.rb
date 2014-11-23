@@ -1,4 +1,4 @@
-require "rails_helper"
+require_relative "../../lib/composite_observer"
 
 describe CompositeObserver do
   it "forwards notifications to several observers" do

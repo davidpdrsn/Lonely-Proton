@@ -1,4 +1,4 @@
-require "rails_helper"
+require_relative "../../lib/decorated_collection"
 
 describe DecoratedCollection do
   it "decorates a collection with a decorator" do

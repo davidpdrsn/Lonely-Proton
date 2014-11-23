@@ -1,3 +1,6 @@
+require "attr_extras"
+require "active_support/all"
+
 # Class for applying a decorator to a collection
 class DecoratedCollection
   include Enumerable

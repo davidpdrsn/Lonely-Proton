@@ -1,3 +1,5 @@
+require "delegate"
+
 # Decorator adding observers to a record
 class ObservableRecord < SimpleDelegator
   def initialize(record, observer)
