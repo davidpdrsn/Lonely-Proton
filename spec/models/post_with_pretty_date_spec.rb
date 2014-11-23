@@ -1,4 +1,4 @@
-require "rails_helper"
+require_relative "../../app/models/post_with_pretty_date"
 
 describe PostWithPrettyDate do
   describe "#pretty_date" do

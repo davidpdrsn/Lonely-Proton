@@ -1,4 +1,5 @@
 require "delegate"
+require "active_support/all"
 
 # Post decorator that prettifies the created_at
 class PostWithPrettyDate < SimpleDelegator
