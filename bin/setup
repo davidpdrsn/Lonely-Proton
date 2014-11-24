@@ -3,9 +3,6 @@
 # Don't let errors pass silently
 set -e
 
-# Setup binstubs via hack in PATH
-mkdir -p .git/safe
-
 # Install dependencies
 bundle install
 
