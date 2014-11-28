@@ -4,7 +4,7 @@ class TagsController < ApplicationController
   before_filter :require_authentication, only: [:create]
 
   def index
-    @tags = Tag.all
+    @tags = Tag.tags_with_posts
   end
 
   def show

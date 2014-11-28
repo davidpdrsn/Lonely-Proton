@@ -17,6 +17,10 @@ class Tag < ActiveRecord::Base
 
   scope :find_for_ids, -> (ids) { where(id: ids) }
 
+  def self.tags_with_posts
+    all.select(&:posts?)
+  end
+
   def to_param
     [id, name.parameterize].join("-")
   end
@@ -27,5 +31,9 @@ class Tag < ActiveRecord::Base
     else
       super(other)
     end
+  end
+
+  def posts?
+    posts.count > 0
   end
 end

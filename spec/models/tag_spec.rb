@@ -63,4 +63,16 @@ describe Tag do
       expect(found_tags.map(&:name)).to eq ["expected"]
     end
   end
+
+  describe ".tags_with_posts" do
+    it "returns the tags that have posts" do
+      rails = create :tag, name: "Rails"
+      javascript = create :tag, name: "JavaScript"
+      create :tag, name: "Cooking"
+
+      create :post, tags: [rails, javascript]
+
+      expect(Tag.tags_with_posts).to eq [rails, javascript]
+    end
+  end
 end
