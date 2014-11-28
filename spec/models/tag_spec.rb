@@ -74,5 +74,15 @@ describe Tag do
 
       expect(Tag.tags_with_posts).to eq [rails, javascript]
     end
+
+    it "does not include tags that only have draft posts" do
+      rails = create :tag, name: "Rails"
+      javascript = create :tag, name: "JavaScript"
+
+      create :post, published_at: nil, tags: [javascript]
+      create :post, tags: [rails]
+
+      expect(Tag.tags_with_posts).to eq [rails]
+    end
   end
 end
