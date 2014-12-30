@@ -1,7 +1,3 @@
-require "redcarpet"
-require "active_support/all"
-require "coderay"
-
 # Class for parsing markdown into HTML
 class MarkdownParser
   OPTIONS = {
@@ -33,6 +29,6 @@ end
 
 class CodeRayify < Redcarpet::Render::HTML
   def block_code(code, language)
-    CodeRay.scan(code, language).div(css: :class)
+    CodeRay.scan(code, (language || "no_language")).div(css: :class)
   end
 end

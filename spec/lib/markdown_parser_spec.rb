@@ -1,4 +1,4 @@
-require_relative "../../lib/markdown_parser"
+require "rails_helper"
 
 describe MarkdownParser do
   it "parses markdown" do
@@ -18,6 +18,20 @@ puts "its all good"
     html = parser.parse(code)
 
     expect(html).to include "class=\"code\""
+    expect(html).to include "pre"
+  end
+
+  it "also parses the code when no language is specified" do
+    parser = MarkdownParser.new
+
+    code = <<-CODE
+```
+puts "its all good"
+```
+    CODE
+
+    html = parser.parse(code)
+
     expect(html).to include "pre"
   end
 end
