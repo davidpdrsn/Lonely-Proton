@@ -19,3 +19,4 @@
 /config/application.yml
 /tags
 stats.csv
+.capistrano
