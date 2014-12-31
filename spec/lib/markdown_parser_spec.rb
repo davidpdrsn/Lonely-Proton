@@ -2,12 +2,12 @@ require "rails_helper"
 
 describe MarkdownParser do
   it "parses markdown" do
-    parser = MarkdownParser.new
+    parser = build_parser
     expect(parser.parse("**hi**")).to include "<strong>hi</strong>"
   end
 
   it "parses and syntax highlights code" do
-    parser = MarkdownParser.new
+    parser = build_parser
 
     code = <<-CODE
 ```ruby
@@ -22,7 +22,7 @@ puts "its all good"
   end
 
   it "also parses the code when no language is specified" do
-    parser = MarkdownParser.new
+    parser = build_parser
 
     code = <<-CODE
 ```
@@ -33,5 +33,14 @@ puts "its all good"
     html = parser.parse(code)
 
     expect(html).to include "pre"
+  end
+
+  def build_parser
+    renderer = HtmlAndCodeRenderer.new(
+      filter_html: true,
+      hard_wrap: true,
+    )
+
+    MarkdownParser.new(Redcarpet::Markdown, renderer)
   end
 end

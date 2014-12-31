@@ -9,6 +9,8 @@ class MarkdownParser
     superscript: true,
   }
 
+  pattr_initialize :markdown_parser_factory, :renderer
+
   def parse(text)
     parser.render(text).html_safe
   end
@@ -16,19 +18,6 @@ class MarkdownParser
   private
 
   def parser
-    Redcarpet::Markdown.new(renderer, OPTIONS)
-  end
-
-  def renderer
-    CodeRayify.new(
-      filter_html: true,
-      hard_wrap: true,
-    )
-  end
-end
-
-class CodeRayify < Redcarpet::Render::HTML
-  def block_code(code, language)
-    CodeRay.scan(code, (language || "no_language")).div(css: :class)
+    markdown_parser_factory.new(renderer, OPTIONS)
   end
 end

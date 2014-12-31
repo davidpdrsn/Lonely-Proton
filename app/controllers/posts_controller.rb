@@ -4,14 +4,11 @@ class PostsController < ApplicationController
                                                 :update, :destroy]
 
   def index
-    @posts = DecoratedCollection.new(
-      Post.recently_published_first,
-      PostWithPrettyDate,
-    )
+    @posts = dependencies[:post_collection].new(Post.recently_published_first)
   end
 
   def show
-    @post = PostWithPrettyDate.new(Post.find(params[:id]))
+    @post = dependencies[:post_decorator].new(Post.find(params[:id]))
 
     require_authentication if @post.draft?
   end
@@ -21,10 +18,7 @@ class PostsController < ApplicationController
   end
 
   def create
-    new_post = Post.new(post_params)
-    new_post.slug = BuildsUniqueSlug.new(Post.all, new_post).unique_slug
-
-    @post = make_post_observable(new_post)
+    @post = saveable_post(Post.new(post_params))
 
     if @post.save
       flash.notice = "Post created"
@@ -40,7 +34,7 @@ class PostsController < ApplicationController
   end
 
   def update
-    @post = make_post_observable(Post.find(params[:id]))
+    @post = saveable_post(Post.find(params[:id]))
 
     if @post.update(post_params)
       flash.notice = "Post updated"
@@ -58,14 +52,11 @@ class PostsController < ApplicationController
 
   private
 
-  def make_post_observable(post)
-    ObservableRecord.new(
+  def saveable_post(post)
+    dependencies[:saveable_post].new(
       post,
-      CompositeObserver.new([
-        PublishObserver.new(is_draft: params[:draft]),
-        ParseMarkdownObserver.new(MarkdownParser.new),
-        TaggingObserver.new(Tag.find_for_ids(params[:post][:tag_ids])),
-      ]),
+      params[:draft],
+      Tag.find_for_ids(params[:post][:tag_ids]),
     )
   end
 
@@ -74,9 +65,10 @@ class PostsController < ApplicationController
   end
 
   def new_post_form(post)
-    NewPostForm.new(
-      post,
-      DecoratedCollection.new(Tag.all, TagWithDomId),
-    )
+    dependencies[:new_post_form].new(post, Tag.all)
+  end
+
+  def builds_unique_slug(new_post)
+    dependencies[:builds_unique_slug].new(Post.all, new_post).unique_slug
   end
 end

@@ -10,6 +10,7 @@ require "rspec/rails"
 require "capybara/rails"
 require "shoulda/matchers"
 require "database_cleaner"
+require "payload/testing"
 
 Capybara.javascript_driver = :webkit
 
@@ -20,6 +21,8 @@ Dir[Rails.root.join("app/**/*.rb")].each { |f| require f }
 ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|
+  config.include Payload::Testing
+
   config.use_transactional_fixtures = true
 
   config.include FactoryGirl::Syntax::Methods
