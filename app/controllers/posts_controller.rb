@@ -54,10 +54,10 @@ class PostsController < ApplicationController
 
   def saveable_post(post)
     dependencies[:saveable_post].new(
-      post,
       params[:draft],
       Tag.find_for_ids(params[:post][:tag_ids]),
-    )
+      Post.all,
+    ).new(post)
   end
 
   def post_params

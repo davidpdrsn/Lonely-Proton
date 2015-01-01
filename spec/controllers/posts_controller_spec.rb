@@ -70,9 +70,8 @@ describe PostsController do
 
     def build_saveable_post(valid:)
       a_post = build_stubbed(:post)
-      saveable_post = stub_factory(:saveable_post)
-      allow(saveable_post).to receive(:new).and_return(a_post)
       allow(a_post).to receive(:save).and_return(valid)
+      stub_decoration(a_post)
       a_post
     end
   end
@@ -125,8 +124,8 @@ describe PostsController do
     def build_saveable_post(params:, valid:)
       post = create :post
       allow(post).to receive(:update).with(params).and_return(valid)
-      saveable_post = stub_factory(:saveable_post)
-      allow(saveable_post).to receive(:new).and_return(post)
+      stub_decoration(post)
+
       post
     end
   end
@@ -163,5 +162,13 @@ describe PostsController do
     allow(post_decorator).to receive(:new).and_return(a_post)
 
     a_post
+  end
+
+  def stub_decoration(a_post)
+    decorator = double("decorator")
+    allow(decorator).to receive(:new).and_return(a_post)
+
+    saveable_post = stub_factory(:saveable_post)
+    allow(saveable_post).to receive(:new).and_return(decorator)
   end
 end

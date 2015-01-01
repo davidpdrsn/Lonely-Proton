@@ -1,29 +1,34 @@
 # Class that builds a unique slug for a post
 class BuildsUniqueSlug
-  def unique_slug(post)
-    if slug_has_been_taken(post)
-      build_new_slug(post)
+  def unique_slug(post, all_posts)
+    @post = post
+    @all_posts = all_posts
+
+    if slug_has_been_taken
+      build_new_slug
     else
-      current_slug(post)
+      current_slug
     end
   end
 
   private
 
-  def slug_has_been_taken(post)
-    post.class.find_by(slug: current_slug(post)).present?
+  attr_reader :post, :all_posts
+
+  def slug_has_been_taken
+    all_posts.find_by(slug: current_slug).present?
   end
 
-  def build_new_slug(post)
+  def build_new_slug
     @iteration = (@iteration || 0) + 1
-    unique_slug(post)
+    unique_slug(post, all_posts)
   end
 
-  def current_slug(post)
-    build_slug(post)
+  def current_slug
+    build_slug
   end
 
-  def build_slug(post)
+  def build_slug
     [post.title, @iteration]
       .compact
       .map(&:to_s)

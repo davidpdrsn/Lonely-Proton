@@ -8,23 +8,17 @@ service :markdown_parser do |_container|
   )
 end
 
-factory :observed_post do |container, post, is_draft, tags|
-  ObservableRecord.new(
-    post,
-    CompositeObserver.new([
-      PublishObserver.new(is_draft: is_draft),
-      ParseMarkdownObserver.new(container[:markdown_parser]),
-      TaggingObserver.new(tags),
-    ]),
-  )
-end
-
-factory :saveable_post do |container, post, is_draft, tags|
-  container[:observed_post].new(
-    PostWithSlug.new(post, container[:builds_unique_slug]),
-    is_draft,
-    tags,
-  )
+factory :saveable_post do |container, is_draft, tags, all_posts|
+  CompositeDecorator.new([
+    CurriedDecorator.new(TaggablePost, tags),
+    CurriedDecorator.new(
+      PostWithSlug,
+      container[:builds_unique_slug],
+      all_posts,
+    ),
+    CurriedDecorator.new(PostWithHtml, container[:markdown_parser]),
+    CurriedDecorator.new(PublishablePost, is_draft: is_draft),
+  ])
 end
 
 factory :new_post_form do |_container, post, tags|

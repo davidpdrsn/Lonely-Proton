@@ -2,17 +2,17 @@ require "rails_helper"
 
 feature "editing posts" do
   scenario "user edits the post" do
-    create :post, title: "Old title"
+    create :post, title: "Old title", markdown: "**not good**"
     authenticate
     visit admin_path
     click_link "Edit"
     fill_in "Title", with: "New title"
-    fill_in "Markdown", with: "**new**"
+    fill_in "Markdown", with: "**content**"
     click_button "Save post"
     visit root_path
 
     expect(page).to have_content "New title"
-    expect(page).to have_css("strong", text: "new")
+    expect(page).to have_css("strong", text: "content")
   end
 
   scenario "edits the tag of a post" do

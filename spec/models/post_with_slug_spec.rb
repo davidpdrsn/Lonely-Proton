@@ -2,6 +2,7 @@ require "rails_helper"
 
 describe PostWithSlug do
   it "generates a slug for the post before its saved" do
+    all_posts = double("all_posts")
     raw_post = double("post")
     save_result = double
     allow(raw_post).to receive(:save).and_return(save_result)
@@ -9,9 +10,9 @@ describe PostWithSlug do
 
     slug_builder = double("slug_builder")
     allow(slug_builder).to receive(:unique_slug)
-      .with(raw_post).and_return("some_slug")
+      .with(raw_post, all_posts).and_return("some_slug")
 
-    post = PostWithSlug.new(raw_post, slug_builder)
+    post = PostWithSlug.new(raw_post, slug_builder, all_posts)
 
     result = post.save
 

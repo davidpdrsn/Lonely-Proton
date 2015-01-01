@@ -3,7 +3,7 @@ require "rails_helper"
 describe BuildsUniqueSlug do
   it "builds a unique slug" do
     post = build :post, title: "JavaScript"
-    slug = BuildsUniqueSlug.new.unique_slug(post)
+    slug = BuildsUniqueSlug.new.unique_slug(post, Post.all)
 
     expect(slug).to eq "javascript"
   end
@@ -12,7 +12,7 @@ describe BuildsUniqueSlug do
     create :post, title: "JavaScript", slug: "javascript"
     create :post, title: "another JavaScript", slug: "javascript-1"
     post = build :post, title: "JavaScript"
-    slug = BuildsUniqueSlug.new.unique_slug(post)
+    slug = BuildsUniqueSlug.new.unique_slug(post, Post.all)
 
     expect(slug).to eq "javascript-2"
   end
