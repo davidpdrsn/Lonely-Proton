@@ -4,8 +4,8 @@ describe Api::MarkdownParserController do
   describe "#parse" do
     it "uses MarkdownParser to parse some markdown and render it" do
       markdown = "**hi**"
-      parser = double("parser", parse: "<strong>hi</strong>")
-      allow(MarkdownParser).to receive(:new).and_return(parser)
+      parser = stub_service(:markdown_parser)
+      allow(parser).to receive(:parse).and_return("<strong>hi</strong>")
 
       post :parse, markdown: markdown
 
