@@ -45,7 +45,7 @@ end
 
 service :search_result_decorator do |container|
   CompositeDecorator.new([
-    PostWithPrettyDate,
+    container[:post_decorator],
     CurriedDecorator.new(
       TruncatedPost,
       markdown_parser: container[:markdown_parser],
