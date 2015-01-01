@@ -2,7 +2,7 @@
 class SearchesController < ApplicationController
   def index
     @results = dependencies[:decorated_search_result].new(
-      Search.new.for(params[:query], type: Post),
+      dependencies[:search_factory].for(params[:query], type: Post),
     )
   end
 

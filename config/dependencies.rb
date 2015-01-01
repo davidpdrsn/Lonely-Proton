@@ -69,3 +69,7 @@ factory :admin_dashboard do |_container, published, drafts|
     drafts: drafts,
   )
 end
+
+service :search_factory do |_container|
+  Search.new
+end
