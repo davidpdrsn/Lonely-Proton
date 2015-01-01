@@ -6,7 +6,7 @@ describe CompositeDecorator do
   it "composes decorators and decorates and object with all of them at once" do
     obj = double
     decorator = CompositeDecorator.new([DecoratorA, DecoratorB])
-    decorated_obj = decorator.decorate(obj)
+    decorated_obj = decorator.new(obj)
 
     expect(decorated_obj.method_from_a).to eq "foo"
     expect(decorated_obj.method_from_b).to eq "bar"
