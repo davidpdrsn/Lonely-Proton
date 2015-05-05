@@ -5,10 +5,4 @@ class SearchesController < ApplicationController
       dependencies[:search_factory].for(params[:query], type: Post),
     )
   end
-
-  private
-
-  def decorator
-    dependencies[:search_result_decorator]
-  end
 end
