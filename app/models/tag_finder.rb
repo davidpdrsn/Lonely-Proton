@@ -1,3 +1,4 @@
+# TODO: Add tests
 class TagFinder
   def initialize(tag_relation, tag_decorator, posts_collection_decorator)
     @tag_relation = tag_relation
