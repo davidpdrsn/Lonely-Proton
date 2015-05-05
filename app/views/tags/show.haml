@@ -1,10 +1,7 @@
 %h1= "Posts tagged with \"#{@tag.name}\""
 
 - if @tag.posts.present?
-  %ul
-    - @tag.posts.each do |post|
-      %li
-        = link_to post.title, post
-        = "(#{post.pretty_date})"
+  %ul.post-list
+    = render partial: "shared/posts_list", locals: { posts: @tag.posts }
 - else
   There are no posts with this tag
