@@ -9,6 +9,10 @@ class PostPersistHook < SimpleDelegator
   end
 
   def update(params)
-    @post.update(params).tap { |updated| save if updated }
+    updated = @post.update(params)
+    if updated
+      save
+    end
+    updated
   end
 end
