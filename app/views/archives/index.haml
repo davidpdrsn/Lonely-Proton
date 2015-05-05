@@ -1,17 +1,7 @@
 - title "Archive"
 
 - if @posts.present?
-  %ul.archive
-    - @posts.each do |post|
-      %li
-        %time{ datetime: post.created_at, pubdate: true }
-          = post.pretty_date
-        - if post.link?
-          %p
-            = link_to post.title, post
-            = link_to "link", post.link, class: "external-link"
-        - else
-          %h1
-            = link_to post.title, post
+  %ul.post-list
+    = render partial: "shared/posts_list", locals: { posts: @posts }
 - else
   There are no posts yet
