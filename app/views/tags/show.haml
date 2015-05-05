@@ -2,7 +2,7 @@
 
 - if @tag.posts.present?
   %ul
-    - DecoratedCollection.new(@tag.posts, PostWithPrettyDate).each do |post|
+    - @tag.posts.each do |post|
       %li
         = link_to post.title, post
         = "(#{post.pretty_date})"

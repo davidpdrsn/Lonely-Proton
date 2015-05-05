@@ -73,3 +73,7 @@ end
 service :search_factory do |_container|
   Search.new
 end
+
+service :tag_finder do |container|
+  TagFinder.new(Tag, TagWithPosts, container[:post_collection])
+end

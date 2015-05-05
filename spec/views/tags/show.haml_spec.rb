@@ -3,7 +3,8 @@ require "rails_helper"
 describe "tags/show.haml" do
   it "shows the posts with the given tag" do
     tag = create(:tag)
-    post = create(:post, tags: [tag])
+    post = PostWithPrettyDate.new(build_stubbed(:post))
+    allow(tag).to receive(:posts).and_return([post])
     assign(:tag, tag)
     render
 

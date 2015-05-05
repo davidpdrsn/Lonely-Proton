@@ -8,7 +8,7 @@ class TagsController < ApplicationController
   end
 
   def show
-    @tag = Tag.find(params[:id])
+    @tag = dependencies[:tag_finder].find(params[:id])
   end
 
   def create
