@@ -6,7 +6,7 @@ feature "viewing top posts" do
     3.times { visit post_path(popular_post) }
     less_popular_post = create :post
     visit post_path(less_popular_post)
-    click_link "Best of"
+    click_link "Top posts"
 
     expect(page.body)
       .to match(/#{popular_post.title}.*#{less_popular_post.title}/m)
@@ -20,7 +20,7 @@ feature "viewing top posts" do
     less_popular_post = create :post
 
     visit root_path
-    click_link "Best of"
+    click_link "Top posts"
 
     expect(page).to_not have_content less_popular_post.title
   end
