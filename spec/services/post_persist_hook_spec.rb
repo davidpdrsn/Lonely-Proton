@@ -3,9 +3,9 @@ require "rails_helper"
 describe PostPersistHook do
   describe "#save" do
     it "raises an exception" do
-      expect {
+      expect do
         PostPersistHook.new(post).save
-      }.to raise_error("PostPersistHook subclass must implement #save")
+      end.to raise_error("PostPersistHook subclass must implement #save")
     end
   end
 

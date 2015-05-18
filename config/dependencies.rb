@@ -40,10 +40,10 @@ service :post_decorator do |_container|
 end
 
 service :post_page do |container|
- PostPage.new(
-   decorator: container[:post_decorator],
-   logger: container[:post_view_logger],
- )
+  PostPage.new(
+    decorator: container[:post_decorator],
+    logger: container[:post_view_logger],
+  )
 end
 
 service :post_view_logger do |_container|
@@ -89,6 +89,6 @@ service :tag_finder do |container|
   TagFinder.new(Tag, TagWithPosts, container[:post_collection])
 end
 
-service :popular_posts_finder do |container|
+service :popular_posts_finder do |_container|
   PopularPostsFinder.new
 end

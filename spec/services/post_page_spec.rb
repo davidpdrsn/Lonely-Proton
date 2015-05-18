@@ -7,8 +7,7 @@ describe PostPage do
       stub_post_model_to_find(post)
       logger = stubbed_logger(post)
 
-      found_post = PostPage.new(decorator: PostDecorator, logger: logger)
-        .find(post.id)
+      find_post(post, logger)
 
       expect(Post).to have_received(:find).with(post.id)
     end
@@ -18,8 +17,7 @@ describe PostPage do
       stub_post_model_to_find(post)
       logger = stubbed_logger(post)
 
-      found_post = PostPage.new(decorator: PostDecorator, logger: logger)
-        .find(post.id)
+      found_post = find_post(post, logger)
 
       expect(found_post.foo).to eq "foo"
     end
@@ -29,7 +27,7 @@ describe PostPage do
       stub_post_model_to_find(post)
       logger = stubbed_logger(post)
 
-      PostPage.new(decorator: PostDecorator, logger: logger).find(post.id)
+      find_post(post, logger)
 
       expect(logger).to have_received(:log_view_of).with(post)
     end
@@ -44,6 +42,13 @@ describe PostPage do
 
     def stub_post_model_to_find(post)
       allow(Post).to receive(:find).with(post.id).and_return(post)
+    end
+
+    def find_post(post, logger)
+      PostPage.new(
+        decorator: PostDecorator,
+        logger: logger,
+      ).find(post.id)
     end
   end
 

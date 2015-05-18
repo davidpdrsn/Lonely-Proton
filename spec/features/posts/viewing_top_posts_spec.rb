@@ -8,7 +8,8 @@ feature "viewing top posts" do
     visit post_path(less_popular_post)
     click_link "Best of"
 
-    expect(page.body).to match /#{popular_post.title}.*#{less_popular_post.title}/m
+    expect(page.body)
+      .to match(/#{popular_post.title}.*#{less_popular_post.title}/m)
   end
 
   scenario "doesn't show more than 5 posts" do
