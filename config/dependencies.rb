@@ -88,3 +88,7 @@ end
 service :tag_finder do |container|
   TagFinder.new(Tag, TagWithPosts, container[:post_collection])
 end
+
+service :popular_posts_finder do |container|
+  PopularPostsFinder.new
+end

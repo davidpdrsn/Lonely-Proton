@@ -43,4 +43,8 @@ class Post < ActiveRecord::Base
   def draft?
     !(published? || new_record?)
   end
+
+  def number_of_views
+    views.count
+  end
 end

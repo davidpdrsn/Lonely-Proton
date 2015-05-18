@@ -152,4 +152,13 @@ describe Post do
       expect(Post.new.draft?).to be_falsy
     end
   end
+
+  describe "#number_of_views" do
+    it "returns the number of views the post has" do
+      post = create :post
+      PostViewLogger.new.log_view_of(post)
+
+      expect(post.number_of_views).to eq 1
+    end
+  end
 end
