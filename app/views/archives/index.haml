@@ -1,5 +1,7 @@
 - title "Archive"
 
+%h1 Archive
+
 - if @posts.present?
   %ul.post-list
     = render partial: "shared/posts_list", locals: { posts: @posts }
