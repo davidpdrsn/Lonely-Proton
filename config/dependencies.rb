@@ -40,7 +40,14 @@ service :post_decorator do |_container|
 end
 
 service :post_page do |container|
-  PostPage.new(container[:post_decorator])
+ PostPage.new(
+   decorator: container[:post_decorator],
+   logger: container[:post_view_logger],
+ )
+end
+
+service :post_view_logger do |_container|
+  PostViewLogger.new
 end
 
 service :builds_unique_slug do |_container|

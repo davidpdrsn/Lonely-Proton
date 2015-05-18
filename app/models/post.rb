@@ -15,6 +15,7 @@
 
 class Post < ActiveRecord::Base
   has_and_belongs_to_many :tags
+  has_many :views, class_name: "PostView"
 
   validates :title, :markdown, :slug, presence: true
   validates :title, :slug, uniqueness: true

@@ -23,6 +23,8 @@ describe Post do
 
   it { should have_and_belong_to_many :tags }
 
+  it { should have_many :views }
+
   it "should validate uniqueness of title" do
     create :post, title: "title"
     expect(build :post, title: "title").to_not be_valid
