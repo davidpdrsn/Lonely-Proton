@@ -8,7 +8,7 @@ class PostsController < ApplicationController
   end
 
   def show
-    @post = dependencies[:post_decorator].new(Post.find(params[:id]))
+    @post = dependencies[:post_page].find(params[:id])
 
     require_authentication if @post.draft?
   end

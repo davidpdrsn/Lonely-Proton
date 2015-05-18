@@ -39,6 +39,10 @@ service :post_decorator do |_container|
   PostWithPrettyDate
 end
 
+service :post_page do |container|
+  PostPage.new(container[:post_decorator])
+end
+
 service :builds_unique_slug do |_container|
   BuildsUniqueSlug.new
 end

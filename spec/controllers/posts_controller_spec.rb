@@ -14,31 +14,35 @@ describe PostsController do
 
   describe "#show" do
     it "shows the post" do
-      post = create :post
-      decorator = stub_service :post_decorator
-      allow(decorator).to receive(:new).and_return(post)
+      id = 1337.to_s
+      post = double("post", id: id, draft?: false)
+      post_page = stub_service :post_page
+      allow(post_page).to receive(:find).with(id).and_return(post)
 
       get :show, id: post.id
+
       expect(response.status).to eq 200
     end
 
-    it "requires authentication if the post is a draft" do
-      draft = create :post, published_at: nil
-      decorator = stub_service :post_decorator
-      allow(decorator).to receive(:new).and_return(draft)
+    context "draft" do
+      it "requires authentication" do
+        draft = create :post, published_at: nil
+        post_page = stub_service :post_page
+        allow(post_page).to receive(:find).with(draft.id.to_s).and_return(draft)
 
-      get :show, id: draft.id
-      expect(response.status).to eq 401
-    end
+        get :show, id: draft.id
+        expect(response.status).to eq 401
+      end
 
-    it "lets authorized users see drafts" do
-      http_login
-      draft = create :post, published_at: nil
-      decorator = stub_service :post_decorator
-      allow(decorator).to receive(:new).and_return(draft)
+      it "lets authorized users see drafts" do
+        http_login
+        draft = create :post, published_at: nil
+        post_page = stub_service :post_page
+        allow(post_page).to receive(:find).with(draft.id.to_s).and_return(draft)
 
-      get :show, id: draft.id
-      expect(response.status).to eq 200
+        get :show, id: draft.id
+        expect(response.status).to eq 200
+      end
     end
   end
 
