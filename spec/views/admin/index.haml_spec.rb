@@ -31,4 +31,14 @@ describe "admin/index.haml" do
     expect(rendered).to match(/There are no published posts yet/)
     expect(rendered).to include draft.title
   end
+
+  it "shows the number of views a post has" do
+    draft = build_stubbed(:post)
+    allow(draft).to receive(:number_of_views).and_return(5)
+    posts = double("posts", published: [], drafts: [draft])
+    assign(:posts, posts)
+    render
+
+    expect(rendered).to include "5 views"
+  end
 end
