@@ -76,7 +76,19 @@ describe PostsController do
       a_post = build_stubbed(:post)
       allow(a_post).to receive(:save).and_return(valid)
       stub_decoration(a_post)
+      form = stubbed_form(a_post, valid: valid)
+
+      new_post_form = stub_factory(:new_post_form)
+      allow(new_post_form).to receive(:new).and_return(form)
+
       a_post
+    end
+
+    def stubbed_form(a_post, valid:)
+      form = double("form")
+      allow(form).to receive(:save).and_return(valid)
+      allow(form).to receive(:post).and_return(a_post)
+      form
     end
   end
 

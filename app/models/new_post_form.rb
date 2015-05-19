@@ -10,4 +10,8 @@ class NewPostForm
   def new?
     @post.new_record?
   end
+
+  def save
+    @post.save
+  end
 end

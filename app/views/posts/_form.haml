@@ -1,4 +1,6 @@
 = form_for form.post do |f|
+  = render partial: "shared/form_errors", locals: { obj: form.post }
+
   %div.new-post-fields
     %div.field
       = f.label :title

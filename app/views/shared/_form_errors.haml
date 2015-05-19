@@ -1,0 +1,6 @@
+- if obj.errors.present?
+  There were the following errors:
+
+  %ul
+    - obj.errors.full_messages.each do |error|
+      %li= error

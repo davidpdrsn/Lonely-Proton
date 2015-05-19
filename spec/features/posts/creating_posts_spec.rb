@@ -30,6 +30,7 @@ feature "creating posts" do
     create_post_but_before_save(title: title) do
       check "Draft"
     end
+    visit root_path
 
     expect(page).not_to have_content title
   end
@@ -46,5 +47,11 @@ feature "creating posts" do
   scenario "creating a post and seeing it in the admin backend" do
     visit admin_path
     expect(page).to have_content title
+  end
+
+  scenario "shows errors when the post is invalid" do
+    2.times { create_post(title: "hi") }
+
+    expect(page).to have_content "Title has already been taken"
   end
 end

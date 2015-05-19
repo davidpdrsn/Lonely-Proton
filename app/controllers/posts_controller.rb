@@ -18,11 +18,11 @@ class PostsController < ApplicationController
   end
 
   def create
-    @post = saveable_post(Post.new(post_params))
+    @form = new_post_form(saveable_post(Post.new(post_params)))
 
-    if @post.save
+    if @form.save
       flash.notice = "Post created"
-      redirect_to @post
+      redirect_to @form.post
     else
       flash.alert = "Post not saved"
       render :new

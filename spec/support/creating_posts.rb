@@ -7,7 +7,6 @@ def create_post(options = {})
     attributes_for(:post)[:markdown]
   yield if block_given?
   click_button "Create post"
-  visit root_path
 
   Post.last
 end

@@ -1,4 +1,8 @@
 class PostPersistHook < SimpleDelegator
+  def self.model_name
+    Post.model_name
+  end
+
   def initialize(post)
     @post = post
     super(post)
