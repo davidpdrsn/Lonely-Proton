@@ -67,8 +67,4 @@ class PostsController < ApplicationController
   def new_post_form(post)
     dependencies[:new_post_form].new(post, Tag.all)
   end
-
-  def builds_unique_slug(new_post)
-    dependencies[:builds_unique_slug].new(Post.all, new_post).unique_slug
-  end
 end
