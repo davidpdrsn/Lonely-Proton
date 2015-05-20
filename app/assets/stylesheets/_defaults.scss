@@ -57,3 +57,12 @@ img {
   display: block;
 }
 
+
+table {
+  table-layout: fixed;
+  width: 100%;
+
+  th {
+    text-align: left;
+  }
+}
