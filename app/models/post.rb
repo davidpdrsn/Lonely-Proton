@@ -15,13 +15,14 @@
 
 class Post < ActiveRecord::Base
   has_and_belongs_to_many :tags
-  has_many :views, class_name: "PostView"
+  has_many :post_views
 
   validates :title, :markdown, :slug, presence: true
   validates :title, :slug, uniqueness: true
 
   scope :recently_created_first, -> { order("created_at desc") }
   scope :drafts, -> { where(published_at: nil) }
+  scope :sorted_by_number_of_views, -> { order(post_views_count: :desc) }
 
   scope :recently_published_first, lambda {
     where.not(published_at: nil).order("published_at desc")
@@ -45,6 +46,6 @@ class Post < ActiveRecord::Base
   end
 
   def number_of_views
-    views.count
+    post_views.count
   end
 end

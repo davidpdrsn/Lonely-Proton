@@ -23,7 +23,7 @@ describe Post do
 
   it { should have_and_belong_to_many :tags }
 
-  it { should have_many :views }
+  it { should have_many :post_views }
 
   it "should validate uniqueness of title" do
     create :post, title: "title"
@@ -159,6 +159,24 @@ describe Post do
       PostViewLogger.new.log_view_of(post)
 
       expect(post.number_of_views).to eq 1
+    end
+  end
+
+  describe "#sorted_by_number_of_views" do
+    it "sorts the posts by number of views" do
+      two = create :post, title: "two"
+      create_views(two, count: 2)
+      three = create :post, title: "three"
+      create_views(three, count: 1)
+      one = create :post, title: "one"
+      create_views(one, count: 3)
+
+      expect(Post.sorted_by_number_of_views.map(&:title))
+        .to eq [one, two, three].map(&:title)
+    end
+
+    def create_views(post, count:)
+      count.times { PostView.create!(post_id: post.id) }
     end
   end
 end

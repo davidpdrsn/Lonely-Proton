@@ -4,7 +4,7 @@ class AdminController < ApplicationController
 
   def index
     @posts = dependencies[:admin_dashboard].new(
-      Post.recently_published_first,
+      Post.sorted_by_number_of_views.recently_published_first,
       Post.drafts,
     )
   end
