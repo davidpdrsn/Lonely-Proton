@@ -21,11 +21,26 @@ factory :saveable_post do |container, is_draft, tags, all_posts|
   ])
 end
 
-factory :new_post_form do |_container, post, tags|
-  NewPostForm.new(
-    post,
-    DecoratedCollection.new(tags, TagWithDomId),
+factory :new_post_form do |container, post, tags|
+  TweetPostWhenPublished.new(
+    NewPostForm.new(
+      post,
+      DecoratedCollection.new(tags, TagWithDomId),
+    ),
+    container[:twitter_client_factory],
+    Tweet
   )
+end
+
+service :twitter_client_factory do |container|
+  TwitterClientFactory.new(
+    real: container[:real_twitter_client],
+    fake: FakeTwitterClient.new,
+  )
+end
+
+service :real_twitter_client do |container|
+  TwitterClientAdapter.new
 end
 
 factory :post_collection do |container, posts|

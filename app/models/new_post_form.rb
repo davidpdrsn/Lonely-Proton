@@ -11,7 +11,6 @@ class NewPostForm
     @post.new_record?
   end
 
-  def save
-    @post.save
-  end
+  delegate :save, to: :post
+  delegate :draft?, to: :post
 end
