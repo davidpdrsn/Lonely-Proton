@@ -5,5 +5,7 @@
   - else
     There are no posts yet
 
-%p
-  = link_to "← Archive", archives_path
+- if @posts.next_page?
+  %p= link_to "Previously", "/?page=#{@posts.next_page}"
+
+%p= link_to "← Archive", archives_path

@@ -92,3 +92,7 @@ end
 service :popular_posts_finder do |_container|
   PopularPostsFinder.new
 end
+
+factory :paginated_collection do |_container, objs, page:|
+  PaginatedCollection.new(objs, page: page, per_page: 10)
+end

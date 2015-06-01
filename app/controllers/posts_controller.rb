@@ -4,7 +4,14 @@ class PostsController < ApplicationController
                                                 :update, :destroy]
 
   def index
-    @posts = dependencies[:post_collection].new(Post.recently_published_first)
+    current_page = params.fetch(:page) { 1 }.to_i
+
+    @posts = dependencies[:paginated_collection].new(
+      dependencies[:post_collection].new(
+        Post.recently_published_first,
+      ),
+      page: current_page,
+    )
   end
 
   def show

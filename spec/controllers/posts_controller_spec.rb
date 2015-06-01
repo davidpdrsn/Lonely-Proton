@@ -3,6 +3,9 @@ require "rails_helper"
 describe PostsController do
   describe "#index" do
     it "delegates to .recently_published_first for finding the posts" do
+      pagination = stub_factory :paginated_collection
+      allow(pagination).to receive(:new)
+
       collection = stub_service :post_collection
       allow(collection).to receive(:new)
 

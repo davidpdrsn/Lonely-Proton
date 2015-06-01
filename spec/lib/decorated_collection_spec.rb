@@ -17,6 +17,12 @@ describe DecoratedCollection do
 
     expect(objects.present?).to eq probe
   end
+
+  it "implements subscripting" do
+    objects = DecoratedCollection.new(10.times.map { double }, DecoratorA)
+
+    expect(objects[0..4].count).to eq 5
+  end
 end
 
 class DecoratorA < SimpleDelegator
