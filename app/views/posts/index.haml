@@ -1,11 +1,12 @@
-%div.posts
-  - if @posts.present?
-    - @posts.each do |post|
-      = render partial: 'shared/post', locals: { post: post }
-  - else
-    There are no posts yet
+- cache ["posts.index", @posts.map(&:updated_at)] do
+  %div.posts
+    - if @posts.present?
+      - @posts.each do |post|
+        = render partial: 'shared/post', locals: { post: post }
+    - else
+      There are no posts yet
 
-- if @posts.next_page?
-  %p= link_to "Previously", "/?page=#{@posts.next_page}"
+  - if @posts.next_page?
+    %p= link_to "Previously", "/?page=#{@posts.next_page}"
 
-%p= link_to "← Archive", archives_path
+  %p= link_to "← Archive", archives_path

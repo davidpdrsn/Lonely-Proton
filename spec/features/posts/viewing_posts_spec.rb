@@ -1,18 +1,18 @@
 require "rails_helper"
 
 feature "viewing posts" do
-  scenario "sees when there are no posts" do
+  scenario "sees when there are no posts", :caching do
     visit root_path
     expect(page).to have_content "There are no posts yet"
   end
 
-  scenario "sees the posts" do
+  scenario "sees the posts", :caching do
     create_post_and_visit_root(title: "its all good")
 
     expect(page).to have_content "its all good"
   end
 
-  scenario "sees the date the post was created" do
+  scenario "sees the date the post was created", :caching do
     create_post_and_visit_root published_at: Time.parse("2001-12-12 20")
 
     within "article.post" do
