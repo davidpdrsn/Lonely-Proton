@@ -9,6 +9,10 @@ Rails.application.routes.draw do
   scope "/api" do
     post "/parse_markdown", to: "api/markdown_parser#parse"
     resources :tags, only: [:create]
+
+    scope :admin, module: :admin do
+      resources :posts, only: [:create]
+    end
   end
 
   get "/search", to: "searches#index", as: :search

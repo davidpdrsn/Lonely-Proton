@@ -51,4 +51,8 @@ RSpec.configure do |config|
     Rails.cache.clear
     ActionController::Base.perform_caching = caching
   end
+
+  RSpec.configure do |config|
+    config.include HttpAuthenticationRequestHelpers, type: :request
+  end
 end

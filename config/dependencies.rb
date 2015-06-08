@@ -8,16 +8,19 @@ service :markdown_parser do |_container|
   )
 end
 
-factory :saveable_post do |container, is_draft, tags, all_posts|
+factory :saveable_post do |container, params|
   CompositeDecorator.new([
-    CurriedDecorator.new(TaggablePost, tags),
+    CurriedDecorator.new(
+      TaggablePost,
+      Tag.find_for_ids(params[:post][:tag_ids]),
+    ),
     CurriedDecorator.new(
       PostWithSlug,
       container[:builds_unique_slug],
-      all_posts,
+      Post.all,
     ),
     CurriedDecorator.new(PostWithHtml, container[:markdown_parser]),
-    CurriedDecorator.new(PublishablePost, is_draft: is_draft),
+    CurriedDecorator.new(PublishablePost, is_draft: params[:draft]),
   ])
 end
 
