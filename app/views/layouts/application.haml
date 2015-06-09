@@ -9,7 +9,7 @@
     = csrf_meta_tags
     %meta{ name: "viewport", content: "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" }
     %link{ href: "http://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700|Lato:400,700,400italic,700italic", rel: "stylesheet" }
-    %link{ rel: "alternate", type: "application/rss+xml", title: "Lonely Proton", href: "http://lonelyproton.com/feed.xml" }
+    %link{ rel: "alternate", type: "application/rss+xml", title: "RSS feed - Lonely Proton", href: "http://feeds.feedburner.com/LonelyProton" }
 
   %body{ "data-no-turbolink" => true }
 
@@ -23,7 +23,7 @@
         = link_to "Top posts", top_posts_path
         = link_to "Archive", archives_path
         = link_to "Tags", tags_path
-        = link_to "Feed", posts_path(format: :rss)
+        = link_to "Feed", "http://feeds.feedburner.com/LonelyProton"
 
     = render "shared/search"
 
