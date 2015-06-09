@@ -23,6 +23,7 @@
         = link_to "Top posts", top_posts_path
         = link_to "Archive", archives_path
         = link_to "Tags", tags_path
+        = link_to "Feed", posts_path(format: :rss)
 
     = render "shared/search"
 
