@@ -1,6 +1,5 @@
 %article.post
-  %h1
-    = render partial: "shared/post_permalink", locals: { post: post }
+  = render partial: "shared/post_permalink", locals: { post: post }
 
   - if post.tags.present?
     = render partial: "shared/tag_list", locals: { tags: post.tags }
